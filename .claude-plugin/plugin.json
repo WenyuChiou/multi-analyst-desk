@@ -28,7 +28,7 @@
   "strict": false,
   "defaults": {
     "CAPITAL": "10000",
-    "LANGUAGE": "en"
+    "LANGUAGE": "English"
   },
   "configuration": {
     "CAPITAL": {
@@ -73,6 +73,11 @@
     "./skills/event-analyst",
     "./skills/market-intel",
     "./skills/opportunity-detector"
+  ],
+  "scheduled-tasks": [
+    "./scheduled-tasks/premarket-analysis",
+    "./scheduled-tasks/intraday-analysis",
+    "./scheduled-tasks/postmarket-analysis"
   ],
   "license": "MIT",
   "repository": "https://github.com/WenyuChiou/multi-analyst-desk"

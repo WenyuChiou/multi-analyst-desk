@@ -32,6 +32,7 @@ This skill orchestrates a 4-analyst team (macro, sector, quant, event) to produc
 |------------|---------------------|-----------|----------|
 | Bullish / Neutral | **Bull Put Spread** | Sell lower-strike Put / Buy even-lower-strike Put | Collect premium ✓ |
 | Bearish / Neutral | **Bear Call Spread** | Sell higher-strike Call / Buy even-higher-strike Call | Collect premium ✓ |
+| Highly Bullish | **Call Ratio Spread** | Sell 2× OTM Call @ K1 / Buy 1× higher Call @ K2 | Net credit; strict Delta management required ✓ |
 | **Strictly Prohibited** | Bull Call Spread | Buy low, sell high Call (DEBIT spread) | This pays premium out — violates the system ✗ |
 | **Strictly Prohibited** | Bear Put Spread | Buy high, sell low Put (DEBIT spread) | This pays premium out — violates the system ✗ |
 | **Always Prohibited** | Naked Put / Naked Call | Unprotected single-leg short | Unlimited loss risk ✗✗✗ |

@@ -340,7 +340,13 @@ The trade-analyst skill includes 3 test scenarios in `skills/trade-analyst/evals
 2. **Post-market crisis management** — SPY -1.8% + spread near stop-loss
 3. **Intraday Fed signal** — dovish Fed comment verification + noise vs. signal classification
 
-**91% pass rate** across 35 assertions (iteration 5).
+**91% pass rate** across 28 assertions (iteration 5).
+
+---
+
+## Disclaimer
+
+This tool is for educational and research purposes only. Nothing here constitutes financial advice. Trading options involves substantial risk of loss; past analysis performance does not guarantee future results.
 
 ---
 

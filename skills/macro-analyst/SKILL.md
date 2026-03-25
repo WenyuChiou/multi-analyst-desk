@@ -31,7 +31,7 @@ The 30-DTE credit spread strategy is sensitive to economic cycles: in expansions
 - 英文：Federal Reserve official statements、FOMC meeting minutes、Fed speakers (Powell 發言)
 - 中文：鉅亨網 "聯準會"、華爾街見聞 "美聯儲"
 
-**宏觀含義**：
+**巨觀含義**：
 - 加息週期 → 信用成本上升 → stock 利率折扣因子下降 → 風險偏好下降 → favor defensive ETF (XLU, XLV)
 - 降息週期 → 流動性寬鬆 → 風險資產漲 → favor growth ETF (QQQ, SMH)
 
@@ -47,7 +47,7 @@ The 30-DTE credit spread strategy is sensitive to economic cycles: in expansions
 - 英文："CPI release BLS"、"PCE inflation"、"Fed inflation expectations"
 - 中文："通膨 CPI"、鉅亨網 "物價指數"、金石數據
 
-**宏觀含義**：
+**巨觀含義**：
 - CPI > 4% → 通膨頑固 → Fed 堅持高息 → bond yields 上升 → TLT 下跌 → GLD/XLE 相對强
 - CPI < 2% → 通膨已馴服 → Fed 可開始降息 → 成長股 QQQ 反彈
 
@@ -63,7 +63,7 @@ The 30-DTE credit spread strategy is sensitive to economic cycles: in expansions
 - 英文：BLS official reports、"NFP expectations"
 - 中文：鉅亨網 "就業數據"、華爾街見聞 "失業率"
 
-**宏觀含義**：
+**巨觀含義**：
 - 強勁就業（失業率 < 3.8%） → 工資通膨風險 → Fed 傾向維持高息 → 利率敏感股下跌 (QQQ)
 - 弱化就業（jobless claims 上升） → Fed 考慮降息 → 風險資產反彈
 
@@ -80,7 +80,7 @@ The 30-DTE credit spread strategy is sensitive to economic cycles: in expansions
 - 英文："ISM PMI"、"GDP growth"、"Conference Board LEI"
 - 中文：鉅亨網 "經濟數據"、華爾街見聞 "PMI"、金石數據
 
-**宏觀含義**：
+**巨觀含義**：
 - ISM > 55 強勁 → 經濟擴張、企業盈利堅韌 → SPY/QQQ 利好
 - ISM < 45 衰退風險 → 降息預期、防守性策略 → XLU/XLV 領跑
 
@@ -96,12 +96,12 @@ The 30-DTE credit spread strategy is sensitive to economic cycles: in expansions
 - 英文："US Treasury yield curve"、"FRED yield curve"
 - 中文：華爾街見聞 "殖利率曲線"、鉅亨網 "殖利率"
 
-**宏觀含義**：
+**巨觀含義**：
 - 曲線正常斜向上升 → 正常擴張 → 平衡配置 (60% SPY/QQQ, 40% 防守)
 - 2Y/10Y 倒掛 → 衰退預警 → 減倉成長、加重防守 (XLU, TLT, GLD)
 - 10Y 快速上升 → 利率衝擊 → QQQ 和 TLT 同時承壓
 
-### 6. 美元指數 (DXY) 和國際宏觀
+### 6. 美元指數 (DXY) 和國際巨觀
 
 監測維度：
 - **DXY 絕對水平**：> 105 強美元、< 98 弱美元
@@ -110,7 +110,7 @@ The 30-DTE credit spread strategy is sensitive to economic cycles: in expansions
 - **歐洲 PMI**：先進經濟體增長信號
 - **EM 流動性**：美元升值對 EM 資產的衝擊
 
-**宏觀含義**：
+**巨觀含義**：
 - 強美元 (DXY > 105) → 新興市場承壓、商品下跌 → GLD/XLE 弱
 - 弱美元 → 出口競爭力提升、商品上漲 → GLD/XLE 强
 - 中國 PMI 暴跌 → 全球供應鏈擔憂 → SMH/XLE 風險升高
@@ -146,10 +146,9 @@ Assess each ETF in the core universe:
 - **XLF (金融)**：高利率環境 ↑ (但衰退風險 ↓↓); Fed 降息 ↓
 - **XLU (公用事業/防守)**：景氣敏感度最低，Contraction 時跑贏 ↑
 - **XLV (醫療)**：低景氣敏感，Slowdown/Contraction 時穩定
-- **GLD (黃金)**：高通膨 ↑↑, 衰退風險 ↑, 強美元 ↓
+- **GLD (黃金)**：高通膨 ↑↑, 衰退風險 ↑, 強美元 ↓; 通膨或衰退風險時避險需求 ↑
 - **TLT (長期美債)**：利率下降時 ↑↑↑, 利率上升 ↓↓; Contraction 時強 ↑
 - **SMH (半導體)**：同 QQQ（科技風險資產）
-- **GLD (黃金)**：通膨或衰退風險時避險需求 ↑
 
 ## Multi-Scenario Framework — Macro Probability Updates
 
@@ -165,16 +164,16 @@ The Macro Analyst assesses scenario probabilities and recommends adjustments bas
 
 ### 概率更新輸出格式
 
-每次宏觀分析結尾必須包含：
+每次巨觀分析結尾必須包含：
 
 ```
 [Scenario Probability Update — Macro]
 - H0 軟著陸: 0.20 → [新值] ([↑/↓/不變] 理由: [一句話])
 - H2 Fed 鴿派: 0.15 → [新值] ([↑/↓/不變] 理由: [一句話])
 - H5 衰退: 0.25 → [新值] ([↑/↓/不變] 理由: [一句話])
-- 其他假說: [如有宏觀相關觀點也可建議]
+- 其他假說: [如有巨觀相關觀點也可建議]
 
-ETF 合理估值區間 (基於宏觀週期):
+ETF 合理估值區間 (基於巨觀週期):
 - SPY: $[下限]-$[上限] (基於 GDP 成長率 × 歷史 PE)
 - QQQ: $[下限]-$[上限] (利率敏感，Fed 政策是關鍵變量)
 ```
@@ -184,7 +183,7 @@ ETF 合理估值區間 (基於宏觀週期):
 This framework applies regardless of the current scenario (geopolitical conflict, inflation, tariffs, recession, etc.):
 
 ```
-【宏觀博弈分析】
+【巨觀博弈分析】
 參與者: [Fed / 政府 / 企業 / 消費者 / ...]
 - Fed 的最優策略: [例如「想降息但通膨卡住 → 維持高息」]
 - Fed 的限制條件: [例如「oil $99 → PCE 上升 → 不敢降」]
@@ -194,10 +193,10 @@ This framework applies regardless of the current scenario (geopolitical conflict
 
 ## 報告產出格式
 
-### 宏觀週刊概況 (每週一次)
+### 巨觀週刊概況 (每週一次)
 
 ```
-【宏觀體制】Slowdown | 【信心】4/5 | 【最大風險】Fed 降息延遲
+【巨觀體制】Slowdown | 【信心】4/5 | 【最大風險】Fed 降息延遲
 【關鍵數據】
 - FOMC 決議：維持 5.25-5.50%, 預計 6 月開始降息
 - 最新 CPI：3.2% YoY (核心 3.8%), 通膨漸緩但仍高於目標
@@ -220,13 +219,13 @@ This framework applies regardless of the current scenario (geopolitical conflict
 4. 觀察 4 月 CPI — 如低於預期則可加倉 QQQ
 ```
 
-### 突發宏觀事件快速評估 (FOMC 決議日、非農發布日等)
+### 突發巨觀事件快速評估 (FOMC 決議日、非農發布日等)
 
 ```
 【事件】FOMC 決議宣布 (2026-03-15 13:00 ET)
 【結果】加息 25bp 至 5.50%，暗示 6 月開始降息
 【市場反應】SPY +1.2%, 10Y -8bp, VIX -2.1
-【宏觀衝擊】Fed 實現 "soft landing" 敘事，降息預期確立
+【巨觀衝擊】Fed 實現 "soft landing" 敘事，降息預期確立
 【ETF 推薦行動】
 - 加倉 QQQ (降息利好成長股)
 - 平倉 TLT bear put (利率回升風險減弱)
@@ -237,7 +236,7 @@ This framework applies regardless of the current scenario (geopolitical conflict
 
 1. **每日掃描**（每天 8:30 AM ET 前）
    - 檢查 FRED 數據更新、Fed 發言、經濟日曆
-   - 快速評估當日經濟新聞對宏觀評估的衝擊
+   - 快速評估當日經濟新聞對巨觀評估的衝擊
 
 2. **每週深度分析**（週一 morning brief 前）
    - 綜合過去一週的經濟數據
@@ -247,7 +246,7 @@ This framework applies regardless of the current scenario (geopolitical conflict
 3. **突發事件快速評估**（FOMC、NFP、CPI 發布當天）
    - 發布後 30 分鐘內產出快速評估
    - 確認是否改變體制判斷
-   - 傳達給 trade-analyst 最新宏觀預設
+   - 傳達給 trade-analyst 最新巨觀預設
 
 4. **月度深度展望**（每月第一個交易日）
    - 回顧上月經濟數據全景
@@ -282,7 +281,7 @@ This framework applies regardless of the current scenario (geopolitical conflict
 
 ### 魔鬼代言人 (Devil's Advocate) — 每次分析必須執行
 
-每次產出宏觀體制判斷後，**強制**從反面論證：
+每次產出巨觀體制判斷後，**強制**從反面論證：
 
 ```
 【我的判斷】Slowdown — 基於 PMI 下降 + 殖利率倒掛
@@ -317,7 +316,7 @@ This framework applies regardless of the current scenario (geopolitical conflict
 
 ### 信心校準 (Confidence Calibration)
 
-每個宏觀判斷必須附帶證據強度評估：
+每個巨觀判斷必須附帶證據強度評估：
 
 | 信心等級 | 條件 | 行動建議 |
 |---------|------|--------|
@@ -336,7 +335,7 @@ This framework applies regardless of the current scenario (geopolitical conflict
 
 ### 「如果我錯了」強制段落 (What If I'm Wrong)
 
-每份宏觀報告結尾必須包含：
+每份巨觀報告結尾必須包含：
 
 ```
 ### 如果我錯了

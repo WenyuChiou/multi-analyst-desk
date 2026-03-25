@@ -2,7 +2,7 @@
   "meta": {
     "generated_at": "2026-03-24T20:35:45.295204+00:00",
     "as_of": "2026-03-24",
-    "output_path": "docs\\data\\warroom_data.json",
+    "output_path": "docs/data/warroom_data.json",
     "active_scenario": "2026Q1_iran_war",
     "gtmvf_version": "v6",
     "warnings": [],
