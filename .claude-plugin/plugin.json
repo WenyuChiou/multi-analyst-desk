@@ -26,8 +26,12 @@
   ],
   "homepage": "https://github.com/WenyuChiou/multi-analyst-desk",
   "strict": false,
+  "defaults": {
+    "CAPITAL": "10000",
+    "LANGUAGE": "en"
+  },
   "configuration": {
-    "YOUR_CAPITAL": {
+    "CAPITAL": {
       "description": "Your total trading capital in USD, used for Kelly position sizing calculations",
       "type": "string",
       "default": "10000",
