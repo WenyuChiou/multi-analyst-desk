@@ -25,10 +25,10 @@ Use WebFetch on key article URLs for full content when a major development is de
 
 ## Step 2: Load relevant skills (as needed)
 
-- `.skills/skills/opportunity-detector\SKILL.md` — noise vs signal classification
-- `.skills/skills/market-intel\SKILL.md` — news credibility rules
-- `.skills/skills/trade-analyst\SKILL.md` — intraday adjustment framework (80-line limit)
-- `.skills/skills/quant-analyst\SKILL.md` — mispricing detection (load if anomaly detected or on first intraday check)
+- `.skills/skills/opportunity-detector/SKILL.md` — noise vs signal classification
+- `.skills/skills/market-intel/SKILL.md` — news credibility rules
+- `.skills/skills/trade-analyst/SKILL.md` — intraday adjustment framework (80-line limit)
+- `.skills/skills/quant-analyst/SKILL.md` — mispricing detection (load if anomaly detected or on first intraday check)
 
 ## Step 3: Load portfolio state (optional)
 

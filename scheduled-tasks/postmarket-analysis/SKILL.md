@@ -7,7 +7,7 @@ Run the post-market AI analyst pipeline for the ETF Mispricing project.
 
 Working directory: <your-project-root>
 
-## Step 1: Real-Time WebSearch — gather end-of-day context BEFORE Python pipeline
+## Step 1: Real-Time WebSearch — gather end-of-day context BEFORE the data gathering pipeline
 
 **English searches:**
 - `"S&P 500 close today"` — final close prices and % change
@@ -27,9 +27,9 @@ Use WebFetch on key news URLs for full content (especially Chinese sources).
 ## Step 2: Load analyst skills
 
 Read skill files for the post-market analysis frameworks:
-- `.skills/skills/market-intel\SKILL.md` — news validation rules
-- `.skills/skills/trade-analyst\SKILL.md` — chief strategist synthesis + critical thinking
-- `.skills/skills/quant-analyst\SKILL.md` — Greeks/Kelly review
+- `.skills/skills/market-intel/SKILL.md` — news validation rules
+- `.skills/skills/trade-analyst/SKILL.md` — chief strategist synthesis + critical thinking
+- `.skills/skills/quant-analyst/SKILL.md` — Greeks/Kelly review
 
 ## Step 3: Load portfolio data (optional)
 
@@ -48,7 +48,7 @@ This reflection updates your confidence calibration for tomorrow.
 
 ## Step 5: Execute post-market synthesis
 
-Using WebSearch findings (Step 1) + warroom context + skill frameworks, produce:
+Using WebSearch findings (Step 1) + market context + skill frameworks, produce:
 1. **P&L review** — today's actual vs morning predictions
 2. **Overnight risk assessment** — what could move markets before tomorrow open
 3. **Tomorrow's pre-market setup** — key levels, events, ETF signals

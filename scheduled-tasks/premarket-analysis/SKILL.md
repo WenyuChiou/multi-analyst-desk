@@ -7,7 +7,7 @@ Run the pre-market AI analyst pipeline for the ETF Mispricing project.
 
 Working directory: <your-project-root>
 
-## Step 1: Real-Time WebSearch — gather fresh data BEFORE running Python pipeline
+## Step 1: Real-Time WebSearch — gather fresh data BEFORE running the data gathering pipeline
 
 **English searches (authoritative, real-time):**
 - `"S&P 500 futures pre-market today"` — overnight futures direction
@@ -27,12 +27,12 @@ Use WebFetch on any key news URLs for full article content (especially Chinese s
 ## Step 2: Load analyst skills
 
 Read the following skill files to use their full analysis frameworks:
-- `.skills/skills/market-intel\SKILL.md` — news filtering rules
-- `.skills/skills/macro-analyst\SKILL.md` — macro regime framework
-- `.skills/skills/event-analyst\SKILL.md` — event risk assessment
-- `.skills/skills/sector-analyst\SKILL.md` — sector rotation signals
-- `.skills/skills/quant-analyst\SKILL.md` — IV/Greeks/Kelly framework
-- `.skills/skills/trade-analyst\SKILL.md` — chief strategist synthesis
+- `.skills/skills/market-intel/SKILL.md` — news filtering rules
+- `.skills/skills/macro-analyst/SKILL.md` — macro regime framework
+- `.skills/skills/event-analyst/SKILL.md` — event risk assessment
+- `.skills/skills/sector-analyst/SKILL.md` — sector rotation signals
+- `.skills/skills/quant-analyst/SKILL.md` — IV/Greeks/Kelly framework
+- `.skills/skills/trade-analyst/SKILL.md` — chief strategist synthesis
 
 ## Step 3: Load portfolio data (optional)
 
@@ -42,7 +42,7 @@ If you maintain a local portfolio data file (e.g., `portfolio_data.json`) with y
 
 ## Step 4: Execute full analysis
 
-Using the WebSearch findings (Step 1) + warroom context (Step 3) + skill frameworks (Step 2), produce a complete pre-market analysis:
+Using the WebSearch findings (Step 1) + market context (Step 3) + skill frameworks (Step 2), produce a complete pre-market analysis:
 1. **Macro analyst** — economic regime, Fed direction, yield curve
 2. **Event analyst** — today's calendar events, IV event premium
 3. **Sector analyst** — ETF relative strength, fund flow signals

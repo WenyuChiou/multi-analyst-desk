@@ -276,7 +276,7 @@ Open `skills/trade-analyst/SKILL.md` and update these parameters:
 
 | Parameter | Default | What to Change |
 |-----------|---------|----------------|
-| `{{YOUR_CAPITAL}}` | 50000 | Your total trading capital in USD (used for Kelly position sizing). Set via plugin configuration or state it in your prompt: "My capital is $X". |
+| `YOUR_CAPITAL` | 10000 | Your total trading capital in USD (used for Kelly position sizing). Set via plugin configuration or state it in your prompt: "My capital is $X". |
 | ETF universe | SPY, QQQ, IWM, XLE, XLF, GLD, TLT, SMH, XLU | Add or remove ETFs to match your portfolio |
 | DTE | 30 days | Target days-to-expiration for credit spreads |
 | Kelly range | 0.25–0.75 | Minimum and maximum Kelly fraction |

@@ -43,7 +43,7 @@
         "Assesses time sensitivity: 2 PM gives 2 hours of market time to act",
         "Recommends Bull Put Spread on SPY or QQQ (dovish = bullish for equities)",
         "Provides strike guidance (OTM put spread below current price)",
-        "Includes Kelly sizing note relative to {{YOUR_CAPITAL}}",
+        "Includes Kelly sizing note relative to the configured CAPITAL amount",
         "Includes risk: 'if comment is re-interpreted as insufficient → SPY reversal'"
       ]
     }

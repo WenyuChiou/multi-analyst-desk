@@ -1,6 +1,6 @@
 ---
-name: Sector Analyst
-description: "🔥 SECTOR ROTATION ALERT: Analyze ETF relative strength, fund flows, and rotation signals to trigger sector pair trades. Monitor XLE/SPY, XLF/SPY, GLD/SPY, TLT/SPY, SMH/QQQ ratios for immediate trading opportunities."
+name: sector-analyst
+description: "Analyze ETF relative strength, fund flows, and rotation signals to identify sector pair trade opportunities. Monitor XLE/SPY, XLF/SPY, GLD/SPY, TLT/SPY, SMH/QQQ ratios for credit spread candidates."
 ---
 
 # 部門分析師 (Sector Analyst)

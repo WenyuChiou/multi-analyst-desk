@@ -26,7 +26,7 @@
         "Compares IV 14% vs HV 12% = IV slightly elevated = mild sell signal",
         "Notes SKEW 108 as near-neutral (mild put demand)",
         "Calculates Kelly fraction for low-vol environment (VIX 18 → 1.0x multiplier)",
-        "Recommends appropriate position size relative to {{YOUR_CAPITAL}}",
+        "Recommends appropriate position size relative to the configured CAPITAL amount",
         "Recommends Bull Put Spread as the credit spread structure",
         "Includes data freshness note and source verification requirement"
       ]

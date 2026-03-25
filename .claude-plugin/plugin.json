@@ -30,7 +30,7 @@
     "YOUR_CAPITAL": {
       "description": "Your total trading capital in USD, used for Kelly position sizing calculations",
       "type": "string",
-      "default": "50000",
+      "default": "10000",
       "example": "100000"
     },
     "LANGUAGE": {
