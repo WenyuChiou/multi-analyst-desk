@@ -1,5 +1,5 @@
 {
-  "name": "etf-mispricing-analyst",
+  "name": "multi-analyst-desk",
   "description": "Multi-analyst AI team that detects ETF mispricing using game theory. 4 specialists (macro, sector, quant, event) + chief strategist produce pre-market, intraday, and post-market reports with credit spread recommendations. Unique features: Nash equilibrium pricing model, bilingual news intelligence (EN + Chinese sources), built-in critical thinking (Devil's Advocate, contradiction detection), and disagreement-driven synthesis instead of consensus averaging.",
   "version": "1.0.0",
   "author": {
@@ -24,7 +24,7 @@
     "nash-equilibrium",
     "quant"
   ],
-  "homepage": "https://github.com/WenyuChiou/etf-mispricing-analyst",
+  "homepage": "https://github.com/WenyuChiou/multi-analyst-desk",
   "strict": false,
   "examples": [
     {
