@@ -1,6 +1,6 @@
 ---
 name: trade-analyst
-description: "ETF 選擇權交易分析師 skill。在需要分析持倉、產出交易建議、評估風險、撰寫盤前/盤中/盤後報告時使用。排程任務（premarket-ai-analysis, intraday-ai-analysis, postmarket-ai-analysis）必須使用此 skill 來確保分析品質達到對沖基金水準。觸發場景：交易分析、持倉評估、策略建議、市場展望、風險評估、P&L 回顧、開倉/平倉建議。只要涉及 ETF 選擇權交易決策就應使用。"
+description: "Chief strategist skill for ETF options portfolio management. Orchestrates a 4-analyst team (macro, sector, quant, event) to produce pre-market, intraday, and post-market reports with actionable credit spread recommendations. Uses GTMVF game theory, disagreement-driven synthesis, and built-in critical thinking. Triggers on: trade analysis, position review, market outlook, risk assessment, P&L review, open/close decisions, and all scheduled analysis tasks."
 ---
 
 # Trade Analyst — ETF 選擇權交易分析師

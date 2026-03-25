@@ -16,10 +16,33 @@
     "game-theory",
     "market-analysis",
     "multi-analyst",
-    "bilingual"
+    "bilingual",
+    "premarket",
+    "options-greeks",
+    "kelly-sizing",
+    "volatility",
+    "nash-equilibrium",
+    "quant"
   ],
   "homepage": "https://github.com/WenyuChiou/etf-mispricing-analyst",
   "strict": false,
+  "examples": [
+    {
+      "title": "Run pre-market analysis",
+      "prompt": "Run premarket analysis",
+      "description": "4-analyst team produces GTMVF mispricing table, hypothesis probability updates, and credit spread recommendations with Kelly sizing"
+    },
+    {
+      "title": "Find mispriced ETFs",
+      "prompt": "What ETFs are mispriced right now?",
+      "description": "GTMVF engine calculates Nash equilibrium prices across the ETF universe and identifies tradeable gaps"
+    },
+    {
+      "title": "Post-market review",
+      "prompt": "Give me the postmarket review",
+      "description": "End-of-day P&L review, overnight risk assessment, and next-day action plan with chief strategist postmortem"
+    }
+  ],
   "skills": [
     "./skills/trade-analyst",
     "./skills/macro-analyst",

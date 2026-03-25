@@ -1,6 +1,6 @@
 ---
 name: opportunity-detector
-description: "交易機會偵測與噪音過濾 skill。在偵測到異常價格波動、突發新聞、VIX 急升急降、ETF 大幅偏離時自動觸發。用於盤中監控、突發事件反應、波動率異常偵測。觸發場景：任何涉及「機會」、「要不要進場」、「現在該怎麼做」、「市場怎麼了」、「為什麼暴跌/暴漲」的問題。也適用於盤中每小時分析和即時事件評估。即使用戶只是隨口問市場狀況，也應使用此 skill 來提供有依據的回答。"
+description: "Real-time trading opportunity detection and noise filtering skill. Monitors for abnormal price moves (VIX >10%, ETF >2% intraday), classifies market moves as noise vs. tradeable signal, and outputs actionable credit spread opportunities or explicit stand-down calls. Triggers on: intraday anomalies, 'should I trade now?', 'what just happened?', market crash or spike questions, and hourly intraday analysis."
 ---
 
 # Opportunity Detector — 交易機會偵測與噪音過濾

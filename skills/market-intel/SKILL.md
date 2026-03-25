@@ -1,6 +1,6 @@
 ---
 name: market-intel
-description: "市場情報SKILL。在任何需要實時新聞、地緣政治事件、Fed決議、財報或宏觀景下使用。步驟：多來源搜索、分類、中英文交叉驗證、可信度評估、市場影響評估、輸出摘要。"
+description: "Market intelligence skill for real-time news gathering and validation. Searches English and Chinese financial sources simultaneously, cross-validates credibility (1-5 scale), filters noise from signal, and outputs structured ETF impact assessments. Triggers on: any need for live market news, geopolitical events, Fed decisions, earnings releases, or macro developments affecting the ETF universe."
 ---
 
 # Market Intelligence | 市場情報

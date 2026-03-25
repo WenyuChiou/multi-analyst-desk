@@ -1,6 +1,6 @@
 ---
 name: quant-analyst
-description: "ETF 選擇權量化分析師 skill。專注於 IV/HV 分析、skew、vol term structure、Greeks 管理、Kelly sizing、mispricing 偵測。在任何涉及量化指標、期權定價、波動率分析、持倉希臘值管理的場景下使用。排程任務的量化分析環節必須使用此 skill。即使用戶只問 VIX 或波動率，也應觸發此 skill 提供專業量化視角。"
+description: "Quantitative analyst skill for ETF options trading. Specializes in IV/HV analysis, volatility skew, vol term structure, Greeks management, Kelly sizing, and GTMVF mispricing verification. Triggers on: any volatility analysis, options pricing questions, Greeks management, Kelly position sizing, mispricing detection, or any request about VIX and implied volatility."
 ---
 
 # 量化分析師 (Quant Analyst) Skill

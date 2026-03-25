@@ -1,6 +1,6 @@
 ---
 name: event-analyst
-description: "事件驅動分析師 skill。追蹤經濟日曆、地緣政治、財報季、期權到期等事件對 IV 和 ETF 價格的影響。在任何涉及事件風險評估、經濟數據發布、地緣政治分析、IV event premium 的場景下使用。排程任務的事件分析環節必須使用此 skill。即使用戶只問「這週有什麼大事」，也應觸發。"
+description: "Event-driven analyst skill. Tracks economic calendar events, geopolitical risks, earnings seasons, and options expiration effects on IV. Identifies optimal credit spread entry timing around post-event IV crush. Uses multi-source validation (English + Chinese sources). Triggers on: FOMC, NFP, CPI, earnings releases, geopolitical developments, and any question about upcoming market-moving events."
 ---
 
 # 事件驅動分析師 (Event-Driven Analyst)

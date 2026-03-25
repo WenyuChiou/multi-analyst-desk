@@ -1,6 +1,6 @@
 ---
 name: macro-analyst
-description: "巨觀經濟分析師 skill。負責監測 Fed 政策、通膨/就業/GDP 指標、殖利率曲線、美元指數，評估經濟週期，產出對 ETF 組合的宏觀衝擊分析。觸發場景：重大經濟數據發布（FOMC、NFP、CPI）、Fed 政策轉折、地緣政治衝擊、市場結構變化。必須全程使用繁體中文，引用權威數據源（FRED、Fed、BLS）。"
+description: "Macroeconomic analyst skill for ETF options trading. Monitors Fed policy, CPI/NFP/GDP data, yield curve dynamics, and DXY to determine economic regime. Updates GTMVF hypothesis probabilities for soft landing, Fed pivot, and recession scenarios. Searches English and Chinese financial sources. Triggers on: FOMC decisions, NFP/CPI releases, Fed policy shifts, yield curve changes, and any macroeconomic regime assessment."
 ---
 
 # Macro Analyst — 巨觀經濟分析師
