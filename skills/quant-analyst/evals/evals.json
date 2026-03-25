@@ -1,0 +1,35 @@
+{
+  "skill_name": "quant-analyst",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "VIX is at 28, up from 18 three weeks ago. SPY IV Rank is 72nd percentile. The vol term structure is in backwardation (VIX3M/VIX = 0.92). SPY's 20-day HV is 19%. What does the quant signal dashboard say, and what credit spread does it recommend?",
+      "expected_output": "Complete quant signal dashboard with IV vs HV analysis, skew assessment, Kelly sizing, and a specific credit spread recommendation",
+      "files": [],
+      "expectations": [
+        "Calculates IV vs HV spread (IV 28% vs HV 19% = IV premium)",
+        "Interprets IV Rank 72nd percentile as elevated (sell signal context)",
+        "Flags backwardation (VIX3M/VIX < 1.0) as a caution signal against aggressive short vol",
+        "Provides VIX-adjusted Kelly fraction (VIX 28 → 0.7x multiplier)",
+        "Recommends a credit spread (Bull Put or Bear Call) with the IV premium rationale",
+        "Includes model skepticism: questions whether IV rank is reliable if regime has changed",
+        "Includes Devil's Advocate: IV high may be justified if real risks exist"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "GLD's IV is 14%, its 52-week IV range is 10%-22%, making IV Rank at 40th percentile. The 20-day HV is 12%. SKEW index is 108. VIX is 18. What is the quant read on GLD, and how should it be sized?",
+      "expected_output": "GLD-specific quant analysis with IV/HV comparison, Kelly calculation, and credit spread recommendation",
+      "files": [],
+      "expectations": [
+        "Calculates IV Rank (40th percentile = moderate, neither high nor low)",
+        "Compares IV 14% vs HV 12% = IV slightly elevated = mild sell signal",
+        "Notes SKEW 108 as near-neutral (mild put demand)",
+        "Calculates Kelly fraction for low-vol environment (VIX 18 → 1.0x multiplier)",
+        "Recommends appropriate position size relative to {{YOUR_CAPITAL}}",
+        "Recommends Bull Put Spread as the credit spread structure",
+        "Includes data freshness note and source verification requirement"
+      ]
+    }
+  ]
+}

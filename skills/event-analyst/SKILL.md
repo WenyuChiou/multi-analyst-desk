@@ -85,15 +85,20 @@ description: "Event-driven analyst skill. Tracks economic calendar events, geopo
 
 ## 3. 地緣政治事件 (Geopolitical Risk Analysis)
 
-### 當前主要監控: 伊朗-以色列戰爭 (2026 年進行中)
+### Current Geopolitical Risk Monitoring
 
-**影響評估框架**:
-| 事件類型 | 風險等級 | 對 XLE 影響 | 對 GLD 影響 | 對 TLT 影響 | Credibility 要求 |
+Search for active geopolitical risks using WebSearch. Apply this generic impact framework based on the type of event detected:
+
+**Impact Assessment Framework**:
+| Event Type | Risk Level | XLE Impact | GLD Impact | TLT Impact | Credibility Required |
 |---------|---------|-----------|-----------|-----------|------------------|
-| 伊朗導彈攻擊 | 5/5 | +3-5% 油價 | +2-3% 上漲 | +1-2% 上漲 | 3+ 源 |
-| 以色列報復 | 4-5/5 | +2-4% 油價 | +1-2% 上漲 | +0.5-1% 上漲 | 3+ 源 |
-| 美國介入 | 5/5 | +5-7% 油價 | +3-4% 上漲 | +2-3% 上漲 | 3+ 源 |
-| 中東停火談判進展 | -3/5 (負面) | -2-3% 油價 | -1-2% 下跌 | -1% 下跌 | 2+ 源 |
+| Military escalation (any region) | 4-5/5 | +3-7% oil | +2-4% rise | +1-3% rise | 3+ sources |
+| Ceasefire / de-escalation | 3/5 | -2-4% oil | -1-2% drop | -1% drop | 2+ sources |
+| Trade restriction / sanctions | 3-4/5 | varies | +1-2% | +0.5-1% | 2+ sources |
+| Energy supply disruption | 4-5/5 | +5-10% oil | +2-3% | neutral | 3+ sources |
+| Geopolitical stabilization | 2-3/5 | -1-3% oil | -1-2% | -0.5% | 2+ sources |
+
+**Search for current active risks with**: `"geopolitical risk today"`, `"military conflict latest"`, `"oil supply disruption"`, `"trade war sanctions update"`
 
 ### 地緣政治搜尋流程
 1. 英文來源: Google News, Reuters, Bloomberg, CNN (geopolitical risk keywords)
@@ -129,25 +134,25 @@ description: "Event-driven analyst skill. Tracks economic calendar events, geopo
 |------------------|------|---------|
 | **> 20%** | 過度定價，權利金豐厚 | **賣信號** - 開 credit spread |
 | **10-20%** | 合理定價 | 中立 - 觀望或小倉位 |
-| **< 10%** | 低估，風險較低 | 買信號 (但 the trader 系統不買期權) |
+| **< 10%** | 低估，風險較低 | Wait — credit-spread-only system does not buy options |
 
 ### 交易時機映射
 - **權利金 > 20%**: 事件發生前 **不應** 開新倉 (進場成本過高)
 - **事件後 1-3 天**: IV 快速下降 → **最佳開倉時機** → 賣 credit spread 收取 theta decay
 - **權利金回落至 <10%**: IV 恢復正常，操作回到日常模式
 
-## 5. CREDIT SPREAD ONLY - 事件策略 (the trader 系統的唯一允許策略)
+## 5. CREDIT SPREAD ONLY — Event Strategy
 
-### 嚴格規則: 使用者的系統 **僅銷售期權權利金，通過 Credit Spread**。
-**永遠不買 Straddles、Strangles、Call Spreads 或任何 Debit 策略。**
+### Strict Rule: This system **only sells option premium via Credit Spreads**.
+**Never buy Straddles, Strangles, Debit Spreads, or any net-debit strategy.**
 
-### 舊版本的錯誤替換表
-| 舊版本建議 (錯誤) | 新版本替換 (正確 - the trader 系統) |
+### Replacement Table (Common Mistakes → Correct Approach)
+| Incorrect Suggestion | Correct Credit-Spread Replacement |
 |------------------|--------------------------|
-| 買 Straddle | **事件後 IV crush → 賣 Bull Put Spread + 賣 Bear Call Spread** |
-| 買 Strangle | **等待事件後 IV 下降，開 credit spread** |
-| 買 Call Spread | **無 - 使用 Bear Call Spread (賣 call + 買更高 call)** |
-| 買 Put Spread | **無 - 使用 Bull Put Spread (賣 put + 買更低 put)** |
+| Buy Straddle | **Post-event IV crush → Sell Bull Put Spread + Bear Call Spread** |
+| Buy Strangle | **Wait for post-event IV drop, then open credit spread** |
+| Buy Call Spread | **None — use Bear Call Spread (sell call + buy higher call)** |
+| Buy Put Spread | **None — use Bull Put Spread (sell put + buy lower put)** |
 
 ### 事件生命週期中的 Credit Spread 策略
 
@@ -170,8 +175,7 @@ description: "Event-driven analyst skill. Tracks economic calendar events, geopo
   - 例: QQQ $450 / $455 Call spread (30 DTE)
   - 對上漲有方向性，同時收取權利金
 - **策略 C**: 鐵禿鷹 (Iron Condor) - 不推薦
-  - 原因: 複雜度高，the trader 偏好簡單 spreads
-  - 但如果事件低波動，可考慮
+  - Note: higher complexity; prefer simple Bull Put or Bear Call unless market is very low-vol
 
 #### 時段 T+7 及以後: 回到正常操作
 - IV 恢復基準水準
@@ -188,14 +192,14 @@ description: "Event-driven analyst skill. Tracks economic calendar events, geopo
 | 事件類型 | 風險等級 | 典型波動 | T-7 到 T-3 (觀望) | T+1 到 T+3 (開倉策略) | Credibility |
 |---------|---------|--------|-----------------|------------------|----------|
 | FOMC 驚人決議 | 5/5 | ±2-4% | 觀望，不開新倉 | 賣 Bull Put + Bear Call Spreads | 必須確認 |
-| 地緣升級 (伊朗攻擊) | 4-5/5 | ±2-3% (XLE, GLD) | 保護倉位 (可持有) | IV crush 後賣 spreads | 3+ 源確認 |
+| Geopolitical escalation | 4-5/5 | ±2-3% (XLE, GLD) | Protect positions (hold) | Sell spreads after IV crush | 3+ sources |
 | NFP 強勢/弱勢 | 3-4/5 | ±1-2% | 觀望 | Bull Put Spread (SPY/IWM) | 2+ 源確認 |
 | CPI 意外 | 3-4/5 | ±1-2% (TLT 敏感) | 觀望 | Bear Call Spread (TLT) | 2+ 源確認 |
 | 黑天鵝事件 | 5/5 | ±3-5% | **避免賣方倉位** | 如果 IV crush，小規模 spreads | 即時確認 |
 
 ### 黑天鵝事件特殊處理
 - 定義: 完全意外的事件 (政變、自然災害、技術崩潰等)
-- 使用者的應對: **避免在黑天鵝期間開新的賣方倉位**
+- **Response**: **Avoid opening new short premium positions during black swan events**
 - 如果已有倉位: 考慮止損或對沖 (購買保護性 put)
 - 事件後期: 等待 2-3 天以確保市場穩定後再開新倉
 
@@ -227,8 +231,8 @@ description: "Event-driven analyst skill. Tracks economic calendar events, geopo
 3. **能源收益季 (XLE, DBC)**
    - 時間: 4 月中、7 月末、10 月末
    - IV 飆升: +20-30% (油價敏感)
-   - 地緣政治疊加: 可能額外 +5-10%
-   - 策略: 關注伊朗-以色列局勢
+   - Geopolitical overlay: may add +5-10% if active conflict affects oil
+   - Strategy: monitor active geopolitical risks alongside earnings
 
 4. **消費收益季 (XLY, XLP)**
    - 時間: 4 月下旬、7 月底、10 月底
@@ -288,11 +292,13 @@ description: "Event-driven analyst skill. Tracks economic calendar events, geopo
 ## 9. 流動性與假期風險 (Holiday & Liquidity Risk)
 
 ### 美國市場假期 (影響成交量與買賣價差)
-- **陣亡將士紀念日**: 5月最後一個週一 (2026年 5/25) → 市場提前收盤或休市
-- **獨立日**: 7月 4 日 (若在週末，則 7/3 或 7/5) → 市場休市
-- **感恩節**: 11 月第四個週四 (2026年 11/26) → 市場開盤，提前收盤
-- **聖誕節**: 12 月 25 日 (若在週末，則 12/24 或 12/28) → 市場休市
-- **新年**: 1 月 1 日 (若在週末，則 12/31 或 1/2) → 市場休市
+- **Memorial Day**: Last Monday in May → early close or market closed
+- **Independence Day**: July 4 (weekend-adjusted) → market closed
+- **Thanksgiving**: 4th Thursday in November → open with early close
+- **Christmas**: December 25 (weekend-adjusted) → market closed
+- **New Year's**: January 1 (weekend-adjusted) → market closed
+
+Use WebSearch for the current year's exact holiday schedule: `"NYSE holiday schedule [year]"`
 
 ### 流動性枯竭期間的風險
 - **成交量下降**: 50-70% 相對正常水準
@@ -376,54 +382,50 @@ description: "Event-driven analyst skill. Tracks economic calendar events, geopo
 ```
 | 日期 | 事件名稱 | 事件類型 | 受影響 ETF | 風險等級 | 當前 IV 權利金 | 信度等級 | 建議策略 | 信息來源 |
 |------|----------|---------|-----------|---------|-------------|--------|---------|----------|
-| 2026-03-26 | FOMC 決議 | 經濟 | SPY, QQQ, TLT | 5/5 | +22% | 5/5 (官方) | T+1-3: 賣 spreads | Federal Reserve |
-| 2026-04-03 | NFP | 經濟 | SPY, IWM | 4/5 | +10% | 5/5 (BLS) | T+1-3: Bull Put Spread | BLS, Trading Economics |
-| 2026-04-10 | 伊朗報復威脅 | 地緣 | XLE, GLD | 4/5 | +15% (GLD) | 4/5 (3源) | 觀望，T+1 後開倉 | Reuters, Bloomberg, 華爾街見聞 |
+| [date] | FOMC Decision | Economic | SPY, QQQ, TLT | 5/5 | +22% | 5/5 (official) | T+1-3: sell spreads | Federal Reserve |
+| [date] | NFP | Economic | SPY, IWM | 4/5 | +10% | 5/5 (BLS) | T+1-3: Bull Put Spread | BLS, Trading Economics |
+| [date] | Active geopolitical risk | Geopolitical | XLE, GLD | 4/5 | +15% (GLD) | 4/5 (3+ sources) | Wait, open T+1 after event | Major newswires |
 ```
 
 ### IV 權利金評估摘要 (IV Premium Summary)
 ```
-## 當前 IV 權利金狀況 (查詢時間: 2026-03-24 14:30 ET)
+## Current IV Premium Status (query time: [timestamp])
 
-### SPY (標普 500 ETF)
-- 當前 IV: 20.5
-- 基準 IV (30天平均): 16.8
-- 權利金: +22.0%
-- 驅動因素: FOMC 決議預期 (2026-03-26)
-- 交易信號: **賣信號** - 開 credit spreads
-- 建議: 等待事件後 (3/27-3/29) IV 下降, 開 Bull Put Spread ($500/$495)
+### SPY
+- Current IV: [fetch via WebSearch]
+- Baseline IV (30-day avg): [calculate or estimate]
+- Event Premium: [calculate]
+- Driver: [identify via WebSearch]
+- Signal: sell signal if premium >20%, neutral if 10-20%
+- Recommendation: wait for post-event T+1-3 window if premium >20%
 
-### QQQ (科技 100 ETF)
-- 當前 IV: 24.1
-- 基準 IV: 19.2
-- 權利金: +25.5%
-- 驅動因素: 4 月科技收益季預期
-- 交易信號: **賣信號** - 開 credit spreads
-- 建議: 持續觀望，4 月初收益發布後 IV crush，開 Bear Call Spread
+### QQQ
+- Current IV: [fetch via WebSearch]
+- Baseline IV: [calculate or estimate]
+- Event Premium: [calculate]
+- Driver: [identify via WebSearch]
+- Recommendation: [based on premium level]
 
-### TLT (長期債券 ETF)
-- 當前 IV: 12.3
-- 基準 IV: 11.5
-- 權利金: +7.0%
-- 驅動因素: 利率風險，低於 FOMC 期間平均
-- 交易信號: 中立
-- 建議: 可開小倉位，但不急迫
+### TLT
+- Current IV: [fetch via WebSearch]
+- Baseline IV: [calculate or estimate]
+- Event Premium: [calculate]
+- Driver: [identify — rate decisions most impactful]
+- Recommendation: small position if premium <15%, otherwise wait
 
-### XLE (能源 ETF)
-- 當前 IV: 18.7
-- 基準 IV: 14.2
-- 權利金: +31.7%
-- 驅動因素: 伊朗衝突升級，油價波動加劇
-- 交易信號: **過度定價** - 不建議事件前開倉
-- 建議: 等待衝突消息確認後，3 天內 IV 會下降，開 Bull Put Spread
+### XLE
+- Current IV: [fetch via WebSearch]
+- Baseline IV: [calculate or estimate]
+- Event Premium: [calculate]
+- Driver: [identify — geopolitical risk and oil moves are key]
+- Note: if active geopolitical event, IV may spike >30% → wait for T+1
 
-### GLD (黃金 ETF)
-- 當前 IV: 13.8
-- 基準 IV: 12.5
-- 權利金: +10.4%
-- 驅動因素: 避險情緒，地緣政治溢價
-- 交易信號: 中立偏弱買信號
-- 建議: 觀望或小規模倉位，地緣風險消退後 IV 會下降
+### GLD
+- Current IV: [fetch via WebSearch]
+- Baseline IV: [calculate or estimate]
+- Event Premium: [calculate]
+- Driver: [identify — safe-haven demand, inflation expectations]
+- Recommendation: [based on premium level]
 ```
 
 ### Credit Spread 開倉時間建議表 (Recommended Entry Timing)
@@ -432,16 +434,16 @@ description: "Event-driven analyst skill. Tracks economic calendar events, geopo
 
 | ETF | 事件 | 事件日 | IV Crush 預期日 | 建議策略 | 建議開倉日期 |
 |-----|------|------|-----------|---------|------------|
-| SPY | FOMC | 3/26 | 3/27-3/28 | Bull Put Spread $500/$495 | 3/27-3/28 |
-| QQQ | 科技收益季起點 | 4/01-4/07 | 4/08-4/10 | Bear Call Spread $450/$455 | 4/09-4/10 |
-| XLE | 伊朗衝突確認 | 待定 | 衝突+3 天 | Bull Put Spread $65/$60 | 衝突+3 天 |
-| TLT | FOMC | 3/26 | 3/27-3/28 | 小倉位 Bull Put Spread | 3/28 (可選) |
+| SPY | FOMC/Economic data | [event date] | T+1 to T+3 | Bull Put Spread (5% OTM, $5 wide) | [event date +1] |
+| QQQ | Earnings season | [earnings date] | T+1 to T+3 | Bear Call Spread (5% OTM, $5 wide) | [earnings date +1] |
+| XLE | Active geopolitical risk | [TBD] | Risk event +3 days | Bull Put Spread (7% OTM, $3 wide) | [event +3 days] |
+| TLT | FOMC/Rate decision | [event date] | T+1 to T+2 | Small Bull Put Spread | [event date +1] |
 
-建議參數:
-- 距離: 5-8% OTM (Out of The Money)
-- DTE: 30 天 (新倉) 或 21 天 (快速進場)
-- 目標收益: 20-30% 權利金 (5-10 DTE 後平倉)
-- 最大虧損: the trader account risk per spread should be capped
+Recommended parameters:
+- OTM distance: 5-8% below/above current price
+- DTE: 30 days (new position) or 21 days (fast entry)
+- Profit target: 20-30% of premium received (close at 5-10 DTE)
+- Max loss per spread: capped at spread width × number of contracts
 ```
 
 ### 日常監控節點 (Daily Monitoring Checkpoints)
@@ -473,10 +475,11 @@ WebSearch("華爾街見聞 經濟數據發布")
 ### 地緣政治查詢
 ```
 WebSearch("geopolitical risk {today}")
-WebSearch("Iran Israel latest news")
+WebSearch("geopolitical conflict latest news")
 WebSearch("Russia Ukraine conflict")
 WebSearch("US China trade war")
-WebSearch("Taiwan strait tensions")
+WebSearch("Middle East tensions")
+WebSearch("energy supply disruption")
 WebSearch("華爾街見聞 地緣政治")
 WebSearch("鉅亨網 國際政治")
 ```
@@ -492,84 +495,83 @@ WebFetch("investing.com/indices/volatility-s-p-500")
 
 ### 期權到期與最大痛點查詢
 ```
-WebSearch("options expiration calendar 2026")
+WebSearch("options expiration calendar [current year]")
 WebSearch("{ETF} max pain this week")
-WebSearch("third Friday options expiration March 2026")
+WebSearch("third Friday options expiration [current month year]")
 ```
 
-## 13. 與 QuantAlpha 系統的整合 (Integration with QuantAlpha)
+## 13. Integration with Other Skills
 
-### 事件分析與 War Room 的協調
-1. **事件檢測**: event-analyst SKILL 定期掃描多源，發現高信度事件
-2. **War Room 面板更新**: 將新事件推送到 War Room Dashboard
-3. **Credit Spread 推薦**: 基於 IV crush 信號，提出具體開倉建議
-4. **Portfolio Monitoring**: 跟蹤既有倉位在事件期間的 Greeks 變化
+### Collaboration Flow
+1. **Event Detection**: event-analyst scans multiple sources and identifies high-credibility events
+2. **Credit Spread Recommendations**: based on IV crush signals, proposes specific entry timings
+3. **Portfolio Monitoring**: tracks how events affect Greeks on existing positions
 
-### 排程任務中的自動化
-- event-analyst 應在每日排程任務中執行 (08:00 ET)
-- 如果發現重大事件 (風險等級 ≥ 4/5), 立即發送警報
-- 事件後 1-3 天內自動重新評估 IV 並建議開倉
+### Automated Scheduling
+- Run event-analyst as part of your daily pre-market scheduled task (08:00 ET)
+- If a major event is detected (risk level ≥ 4/5), flag it prominently in the report
+- Re-evaluate IV automatically 1-3 days after the event to recommend entries
 
-### 與其他 Skills 的依賴關係
-- **Upstream**: 來自 news-aggregator 或手動警報的事件輸入
-- **Downstream**: 向 spread-validator 提交開倉建議，由其驗證風險
-- **Parallel**: opportunity-detector 可能獨立識別 IV anomalies，協作檢查
+### Skill Dependencies
+- **Upstream**: market-intel provides validated news input
+- **Downstream**: trade-analyst uses event risk assessment to weight analyst outputs
+- **Parallel**: opportunity-detector may independently flag IV anomalies — coordinate checks
 
-## 14. GTMVF 博弈論職責 — 事件驅動假說概率更新
+## 14. Multi-Scenario Framework — Event-Driven Probability Updates
 
-### 核心任務
+### Core Task
 
-Event 分析師負責根據地緣政治事件和經濟數據發布，更新 GTMVF 假說的概率權重：
+The Event Analyst updates scenario probability weights based on geopolitical events and economic data releases. The scenarios are user-configurable (see trade-analyst SKILL.md). Common scenario mapping:
 
-| 假說 | 你的職責 |
+| Scenario Type | Your Role |
 |------|---------|
-| **H1 (伊朗戰爭, base=0.40)** | 根據地緣事件升降級調整概率。攻擊升級 → H1↑；停火談判進展 → H1↓ |
-| **H4 (油價衝擊, base=0.20)** | 根據能源供應鏈事件調整。OPEC 減產、霍爾木茲海峽封鎖威脅 → H4↑；增產/替代能源突破 → H4↓ |
-| **H0 (軟著陸, base=0.20)** | 當重大風險事件未兌現（如停火、制裁緩和）→ H0↑ |
-| **H5 (衰退, base=0.25)** | 當經濟數據連續低於預期（NFP miss + GDP miss）→ H5↑ |
+| **Geopolitical / Supply Shock (H1)** | Adjust up on escalation (military action, sanctions); adjust down on de-escalation (ceasefire, diplomacy) |
+| **Commodity / Supply Disruption (H4)** | Adjust up on OPEC cuts, supply chain disruptions; adjust down on supply normalization |
+| **Base Case / Soft Landing (H0)** | Adjust up when major risk events fail to materialize (ceasefire, sanction relief) |
+| **Recession (H5)** | Adjust up when economic data consistently misses (NFP miss + GDP miss) |
 
-### 事件 → 假說概率映射框架
+### Event → Scenario Probability Mapping
 
-此框架適用於任何事件場景（不僅限於伊朗戰爭）：
-
-```
-Step 1: 事件分類
-  - 地緣衝突升級 → 主要影響 H1, H4
-  - 經濟數據意外 → 主要影響 H0, H2, H5
-  - 政策突變 (關稅/制裁) → 影響 H0, H3, H5
-  - 市場結構事件 (OpEx, 流動性危機) → 影響所有假說信心水準
-
-Step 2: 量化概率調整
-  - 高信度事件 (credibility ≥4/5): 概率調整幅度 ±0.05-0.10
-  - 中信度事件 (credibility 3/5): 概率調整幅度 ±0.02-0.05
-  - 低信度事件 (credibility ≤2/5): 不調整概率，僅標記觀察
-
-Step 3: ETF 目標價連動
-  - 如果 H1↑ → XLE 目標價↑、GLD 目標價↑、SPY 目標價↓
-  - 如果 H4↑ → XLE 目標價↑、TLT 目標價↑（避險）
-  - 如果 H0↑ → SPY/QQQ 目標價↑、GLD/TLT 目標價↓
-```
-
-### 概率更新輸出格式
+This framework applies to any event scenario:
 
 ```
-【GTMVF 驗證 — Event】
-- 本期關鍵事件:
-  - [事件名稱] (credibility: X/5, 來源數: N)
-  - 事件影響衰減評估: T+0 impact / T+3 residual
-- 假說概率調整建議:
-  - H1(伊朗戰爭): 0.40 → 0.[新值] (原因: [具體事件])
-  - H4(油價衝擊): 0.20 → 0.[新值] (原因: [供應鏈變化])
-  - H0(軟著陸): 0.20 → 0.[新值] (原因: [風險是否消退])
-- ETF 目標價影響:
-  - XLE: GTMVF 目標 $X vs 事件驅動估值 $Y → [一致/偏高/偏低]
-  - GLD: GTMVF 目標 $X vs 避險需求信號 → [一致/偏高/偏低]
-- 事件信度對信心的約束:
-  - 單源事件 → 概率調整信心 ×0.3
-  - 多源確認 → 概率調整信心 ×1.0
+Step 1: Classify the event
+  - Geopolitical escalation → primarily affects H1, H4
+  - Economic data surprise → primarily affects H0, H2, H5
+  - Policy shock (tariffs, sanctions) → affects H0, H3, H5
+  - Market structure event (OpEx, liquidity crisis) → affects confidence across all scenarios
+
+Step 2: Quantify probability adjustment
+  - High-credibility event (credibility ≥4/5): adjust ±0.05-0.10
+  - Medium-credibility event (credibility 3/5): adjust ±0.02-0.05
+  - Low-credibility event (credibility ≤2/5): do not adjust — observe only
+
+Step 3: ETF target price implications
+  - If geopolitical scenario ↑ → XLE target ↑, GLD target ↑, SPY target ↓
+  - If supply shock ↑ → XLE target ↑, TLT target ↑ (flight to safety)
+  - If base case ↑ → SPY/QQQ target ↑, GLD/TLT target ↓
 ```
 
-### 通用化：適用於任何事件場景
+### Scenario Update Output Format
+
+```
+[Multi-Scenario Update — Event]
+- Key event this period:
+  - [event name] (credibility: X/5, sources: N)
+  - Event decay assessment: T+0 impact / T+3 residual
+- Scenario probability adjustments:
+  - H1 (Geopolitical): [weight] → [new weight] (Reason: [specific event])
+  - H4 (Supply Shock): [weight] → [new weight] (Reason: [supply chain change])
+  - H0 (Base Case): [weight] → [new weight] (Reason: [did risk materialize?])
+- ETF target price implications:
+  - XLE: scenario target $X vs event-driven estimate $Y → [aligned / too high / too low]
+  - GLD: scenario target $X vs safe-haven demand signal → [aligned / too high / too low]
+- Credibility constraint on confidence:
+  - Single source → probability adjustment confidence ×0.3
+  - Multi-source confirmed → probability adjustment confidence ×1.0
+```
+
+### Generalized: Applies to Any Event Scenario
 
 | 事件類別 | 參與者 | 影響假說 | 概率調整邏輯 |
 |---------|--------|---------|------------|
@@ -611,14 +613,14 @@ Step 3: ETF 目標價連動
 不是所有事件都有持續影響。每個事件必須評估衰減速度：
 
 ```
-事件: 伊朗攻擊以色列
-T+0: XLE +3%, GLD +2% (衝擊最大)
-T+1: XLE +1%, GLD +0.5% (衰減 60%)
-T+3: XLE +0.2%, GLD +0.1% (幾乎消化)
-T+7: 回到事件前水準 (除非升級)
+Example: Geopolitical escalation event (generic)
+T+0: XLE +3%, GLD +2% (peak shock)
+T+1: XLE +1%, GLD +0.5% (60% decay)
+T+3: XLE +0.2%, GLD +0.1% (nearly absorbed)
+T+7: back to pre-event levels (unless escalation continues)
 
-結論: 如果 T+3 仍有 >50% 衝擊殘留，才是真正的結構性事件
-如果 T+1 已衰減 >70%，這是一次性噪音，不應影響策略
+Conclusion: if >50% shock persists at T+3, this is a structural event
+if >70% decay by T+1, this is a one-time noise event — do not adjust strategy
 ```
 
 ### 矛盾偵測 (Contradiction Detection)
@@ -652,6 +654,11 @@ T+7: 回到事件前水準 (除非升級)
 ### 已知的未知
 1. Fed 內部對降息的分歧程度（需等待 FOMC minutes）
 2. 中國是否會推出新一輪刺激（影響全球風險偏好）
-3. 伊朗衝突是否有秘密外交（消息面可能突然反轉）
-→ 這些未知因素使整體信心上限為 3/5
+3. Whether any active geopolitical conflict has back-channel diplomacy (news could reverse suddenly)
+→ These unknowns cap overall confidence at 3/5
 ```
+
+## Language Configuration
+
+Respond in the user's language. Default to **English** if no language preference is specified. Chinese output is supported — set your preference in the plugin configuration or state it in your prompt.
+

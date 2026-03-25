@@ -1,594 +1,591 @@
 ---
 name: quant-analyst
-description: "Quantitative analyst skill for ETF options trading. Specializes in IV/HV analysis, volatility skew, vol term structure, Greeks management, Kelly sizing, and GTMVF mispricing verification. Triggers on: any volatility analysis, options pricing questions, Greeks management, Kelly position sizing, mispricing detection, or any request about VIX and implied volatility."
+description: "Quantitative analyst skill for ETF options trading. Specializes in IV/HV analysis, volatility skew, vol term structure, Greeks management, Kelly sizing, and mispricing verification. Triggers on: any volatility analysis, options pricing questions, Greeks management, Kelly position sizing, mispricing detection, or any request about VIX and implied volatility."
 ---
 
-# 量化分析師 (Quant Analyst) Skill
+# Quant Analyst Skill
 
-## 概述
-本 skill 提供 ETF 選擇權的專業量化分析，包括隱含波動率 (IV)、實現波動率 (HV)、波動率偏斜 (skew)、期限結構、希臘值管理、Kelly 凱利公式調整、及 mispricing 偵測。
+## Overview
+This skill provides professional quantitative analysis for ETF options trading, covering implied volatility (IV), historical volatility (HV), volatility skew, term structure, Greeks management, Kelly formula, and mispricing detection.
 
-**觸發條件：**
-- 任何涉及波動率、期權定價、Greeks、Kelly sizing、波動率期限結構的分析
-- 排程任務中的量化指標計算
-- 即使簡單問題（如「VIX 今天多少」）也應提供量化背景分析
+**Triggers:**
+- Any analysis involving volatility, options pricing, Greeks, Kelly sizing, or vol term structure
+- Quantitative metrics in scheduled analysis tasks
+- Even simple questions (e.g., "what's VIX today") should include quantitative context
 
 ---
 
-## 1. 多源數據收集與交叉驗證
+## 1. Multi-Source Data Collection and Cross-Validation
 
-### 資料來源清單
+### Data Source List
 
-#### 英文來源：
+#### English Sources:
 - **WebSearch**: "VIX term structure today", "{ETF} implied volatility options", "options skew index", "IV percentile"
-- **WebFetch**: 
-  - vixcentral.com — VIX、VIX3M、VIX6M、VIX9M term structure
-  - marketchameleon.com — IV percentile rank、historical volatility comparison
-  - cboe.com — CBOE VIX methodology、skew data
+- **WebFetch**:
+  - vixcentral.com — VIX, VIX3M, VIX6M, VIX9M term structure
+  - marketchameleon.com — IV percentile rank, historical volatility comparison
+  - cboe.com — CBOE VIX methodology, skew data
 
-#### 中文來源：
-- **WebSearch**: 金石數據 "波動率分析"、鉅亨網 "期權隱含波動率"、CMoney "期權 IV"
+#### Chinese Sources (optional):
+- **WebSearch**: 金石數據 "波動率分析", 鉅亨網 "期權隱含波動率", CMoney "期權 IV"
 
-### 數據交叉驗證規則
+### Data Cross-Validation Rules
 
-**必須遵守：**
-1. IV/HV 數據必須來自至少 2 個獨立來源
-2. 如果來源間差異 >5%，**必須標記為 "不確定" (Uncertain)**，查詢第三個來源
-3. VIX 數據若與 warroom_data.json 差距 >2 點，標記為 "數據可能過時"
-4. 記錄數據時間戳，使用時註明數據新鮮度 (時間戳距現在不超過 15 分鐘)
-
----
-
-## 2. IV vs HV 分析
-
-### 隱含波動率 (IV) 取得
-
-**步驟 1：** WebSearch "{ETF symbol} implied volatility today"
-- 查找 CBOE、marketchameleon、thinkorswim 等來源
-- 記錄 IV（以 % 表示）、data timestamp
-
-**步驟 2：** WebFetch marketchameleon.com (IV Percentile)
-- 提取當前 IV percentile rank（例：45th percentile）
-- 表示該 IV 在過去 52 週內排名
-
-### 實現波動率 (HV) 計算
-
-- **20 日 HV**: 計算過去 20 個交易日 log returns 標準差 × √252
-- **30 日 HV**: 計算過去 30 個交易日 log returns 標準差 × √252
-- **比較結果**: IV vs 20d-HV、IV vs 30d-HV
-
-### 分析框架
-
-| 指標 | 計算方式 | 解讀 |
-|------|--------|------|
-| IV Rank | (Current IV - 52w Low) / (52w High - 52w Low) × 100 | <30: 低估, 50-70: 正常, >80: 高估 |
-| IV vs 20d HV | IV - HV(20d) | >0: IV 高估, <0: IV 低估 |
-| IV vs 30d HV | IV - HV(30d) | 趨勢判斷、mean reversion 機會 |
+**Must follow:**
+1. IV/HV data must come from at least 2 independent sources
+2. If sources differ by >5%, **must flag as "Uncertain"** and query a third source
+3. If two sources differ by >2 VIX points, flag as "Data may be stale"
+4. Record data timestamps; note data freshness when using (timestamp must be within 15 minutes)
 
 ---
 
-## 3. 波動率偏斜 (Skew) 分析
+## 2. IV vs HV Analysis
 
-### 數據來源
+### Implied Volatility (IV) Retrieval
+
+**Step 1:** WebSearch "{ETF symbol} implied volatility today"
+- Look for CBOE, marketchameleon, thinkorswim sources
+- Record IV (as %), data timestamp
+
+**Step 2:** WebFetch marketchameleon.com (IV Percentile)
+- Extract current IV percentile rank (e.g., 45th percentile)
+- Represents IV's ranking over the past 52 weeks
+
+### Historical Volatility (HV) Calculation
+
+- **20-day HV**: Calculate log returns standard deviation × √252 for past 20 trading days
+- **30-day HV**: Calculate log returns standard deviation × √252 for past 30 trading days
+- **Compare results**: IV vs 20d-HV, IV vs 30d-HV
+
+### Analysis Framework
+
+| Indicator | Calculation | Interpretation |
+|-----------|------------|----------------|
+| IV Rank | (Current IV - 52w Low) / (52w High - 52w Low) × 100 | <30: underpriced, 50-70: normal, >80: overpriced |
+| IV vs 20d HV | IV - HV(20d) | >0: IV overpriced, <0: IV underpriced |
+| IV vs 30d HV | IV - HV(30d) | Trend assessment, mean reversion opportunity |
+
+---
+
+## 3. Volatility Skew Analysis
+
+### Data Sources
 
 **WebSearch**: "{ETF} options skew analysis", "put/call IV skew {symbol}"
-- 查找 CBOE SKEW index（適用於 SPY）
-- 提取 put-side IV 與 call-side IV 差異
+- Look for CBOE SKEW index (applicable to SPY)
+- Extract put-side IV vs call-side IV differential
 
 **WebFetch**: vixcentral.com (SKEW data)
-- 記錄 SKEW 值（>100: 負 skew、<100: 低 skew）
+- Record SKEW value (>100: negative skew, <100: low skew)
 
-### 偏斜量化指標
+### Skew Quantification
 
 ```
-Put IV - Call IV = Skew 差異
-正值：看跌單邊高估（市場恐懼）
-負值：看漲單邊高估（市場過度樂觀）
+Put IV - Call IV = Skew differential
+Positive: downside skewed overpriced (market fear)
+Negative: upside skewed overpriced (market over-optimism)
 ```
 
-### 交易信號
+### Trading Signals
 
-- **Skew >120**: 市場極度恐懼，put 高估 → Bull Put Spread 優選
-- **Skew 80-100**: 市場中立
-- **Skew <80**: 市場樂觀，call 高估 → Bear Call Spread 優選
-
----
-
-## 4. 波動率期限結構 (Vol Term Structure)
-
-### 關鍵比率計算
-
-**數據取得：** WebFetch vixcentral.com
-- VIX（30 日）
-- VIX3M（3 個月）
-- VIX6M（6 個月）
-
-**比率計算：**
-
-| 比率 | 計算 | 期限結構含義 |
-|------|-----|-----------|
-| Term Ratio | VIX3M / VIX | >1.0: contango（正向結構）, <1.0: backwardation（反向結構） |
-| 6M Ratio | VIX6M / VIX | >1.0: long-term 高波動, <1.0: 短期市場恐懼 |
-| Curve Slope | (VIX6M - VIX) / 180 | 期限結構陡峭度 |
-
-### 結構判斷
-
-- **Contango** (VIX3M > VIX): 市場預期波動率下降，低波波環境
-  - 適合：Bull Put Spread（時間衰減有利）
-- **Backwardation** (VIX3M < VIX): 市場預期近期波動率升高，市場不確定
-  - 適合：謹慎，減少持倉或採用寬鬆距離
+- **Skew >120**: Extreme market fear, puts overpriced → Bull Put Spread preferred
+- **Skew 80-100**: Market neutral
+- **Skew <80**: Market optimism, calls overpriced → Bear Call Spread preferred
 
 ---
 
-## 5. 希臘值 (Greeks) 管理
+## 4. Volatility Term Structure
 
-### 讀取來源
+### Key Ratio Calculations
 
-**warroom_data.json** 中的 portfolio Greeks：
-- 每次執行前讀取當前持倉的累積 Delta、Gamma、Theta、Vega
+**Data source:** WebFetch vixcentral.com
+- VIX (30-day)
+- VIX3M (3-month)
+- VIX6M (6-month)
 
-### 管理閾值
+**Ratio calculations:**
 
-| 希臘值 | 安全範圍 | 警告 | 調整行動 |
-|--------|--------|------|--------|
-| **Delta** | ±0.15 | ±0.20 以上 | 對沖或平倉部分部位 |
-| **Gamma** | <0.02 | >0.03 | 減少新增高 gamma 部位 |
-| **Theta** | >0.01/天 | <0 | 檢查是否過度 long vega |
-| **Vega** | ±0.10 | ±0.15 以上 | 調整波動率對沖 |
+| Ratio | Calculation | Term Structure Meaning |
+|-------|------------|----------------------|
+| Term Ratio | VIX3M / VIX | >1.0: contango (normal structure), <1.0: backwardation (inverted) |
+| 6M Ratio | VIX6M / VIX | >1.0: long-term high vol, <1.0: short-term market fear |
+| Curve Slope | (VIX6M - VIX) / 180 | Term structure steepness |
 
-### 希臘值調整邏輯
+### Structure Assessment
 
-1. **每日檢查** warroom_data.json portfolio Greeks
-2. **Gamma 過高** (>0.03): 減少新增短期期權、優先平倉高 gamma
-3. **Delta 偏離** (±0.20+): 買進/賣出對應期權重新平衡
-4. **Theta 為負**: 檢查是否承受過高 vega 風險，考慮套利
+- **Contango** (VIX3M > VIX): Market expects volatility to decline, low-vol environment
+  - Suitable for: Bull Put Spread (time decay favorable)
+- **Backwardation** (VIX3M < VIX): Market expects near-term vol to rise, uncertainty elevated
+  - Suitable for: Caution — reduce positions or use wider strikes
 
 ---
 
-## 6. 自適應 Kelly 凱利公式
+## 5. Greeks Management
 
-### Kelly 基礎公式
+### Data Source
+
+**Portfolio data source**: Read from your local portfolio file (e.g., portfolio_data.json) if available. Otherwise, enter your current Greeks manually or skip if no positions exist.
+- Read cumulative Delta, Gamma, Theta, Vega for current positions before each run
+
+### Management Thresholds
+
+| Greek | Safe Range | Warning | Adjustment Action |
+|-------|-----------|---------|------------------|
+| **Delta** | ±0.15 | ±0.20+ | Hedge or partially close position |
+| **Gamma** | <0.02 | >0.03 | Reduce adding new high-gamma positions |
+| **Theta** | >0.01/day | <0 | Check if over-long vega |
+| **Vega** | ±0.10 | ±0.15+ | Adjust volatility hedge |
+
+### Greeks Adjustment Logic
+
+1. **Daily check** of portfolio Greeks from local portfolio data
+2. **Gamma too high** (>0.03): Reduce new short-term options, prioritize closing high-gamma
+3. **Delta deviation** (±0.20+): Buy/sell corresponding options to rebalance
+4. **Theta negative**: Check if bearing excessive vega risk, consider arbitrage
+
+---
+
+## 6. Adaptive Kelly Formula
+
+### Kelly Base Formula
 
 ```
 Kelly % = (Win Rate × Avg Win - Loss Rate × Avg Loss) / Avg Win
-最大持倉 % = Kelly % × Risk Capital
+Max position % = Kelly % × Risk Capital
 ```
 
-### 讀取實際數據
+### Reading Actual Data
 
-**backtest_results.json** (歷史回測):
-- win_rate: 平均勝率（例：55%）
-- avg_win: 平均勝利報酬（例：1.2%）
-- avg_loss: 平均虧損（例：1.0%）
+**Historical performance data** (from your own backtest records):
+- win_rate: Average win rate (e.g., 55%)
+- avg_win: Average winning return (e.g., 1.2%)
+- avg_loss: Average loss (e.g., 1.0%)
 
-**計算示例：**
+**Calculation example:**
 ```
-假設 win_rate=55%, avg_win=1.2%, avg_loss=1.0%
+Assume win_rate=55%, avg_win=1.2%, avg_loss=1.0%
 Kelly = (0.55×1.2 - 0.45×1.0) / 1.2 = 0.325 = 32.5%
 ```
 
-### VIX 風險調整表
+### VIX Risk Adjustment Table
 
-| VIX 範圍 | 調整係數 | 實際 Kelly % | 含義 |
-|---------|--------|-----------|------|
-| 15-25 | 1.0× | 100% Kelly | 低波環境，可用全 Kelly |
-| 25-30 | 0.7× | 70% Kelly | 中等波動，降低倉位 |
-| 30-35 | 0.5× | 50% Kelly | 高波動，謹慎運作 |
-| >35 | 0.25× | 25% Kelly | 極端恐懼，最小倉位 |
+| VIX Range | Adjustment Factor | Actual Kelly % | Meaning |
+|----------|------------------|---------------|---------|
+| 15-25 | 1.0× | 100% Kelly | Low-vol environment, full Kelly usable |
+| 25-30 | 0.7× | 70% Kelly | Moderate vol, reduce position size |
+| 30-35 | 0.5× | 50% Kelly | High vol, operate cautiously |
+| >35 | 0.25× | 25% Kelly | Extreme fear, minimum position |
 
-### 執行規則
+### Execution Rules
 
-1. 計算基礎 Kelly %
-2. 查詢當日 VIX
-3. 應用調整係數
-4. 實際倉位 = Capital × Adjusted Kelly %
+1. Calculate base Kelly %
+2. Query current VIX
+3. Apply adjustment factor
+4. Actual position = Capital × Adjusted Kelly %
 
 ---
 
-## 7. GTMVF 博弈論職責 — 量化驗證 Mispricing
+## 7. Multi-Scenario Pricing — Quantitative Mispricing Verification
 
-### 核心任務
+### Core Responsibilities
 
-Quant 分析師負責用技術面和量化指標**驗證 GTMVF 的 mispricing 判斷**：
+The Quant analyst is responsible for using technical and quantitative indicators to **verify mispricing judgments from the scenario pricing framework**:
 
-| 你的職責 | 具體做法 |
-|---------|--------|
-| 技術面驗證 gap_pct | GTMVF 說 SPY 高估 14.6% — 技術面支持嗎？(偏離 20MA 多少 SD？RSI？) |
-| IV 交叉驗證 | 如果 GTMVF 說 XLE 低估 31%，但 XLE IV 極高 → 市場定價了你沒看到的風險 |
-| 均值回歸概率 | gap_pct 預計多久回歸？(基於歷史波動率和當前動量) |
-| 動量確認/否定 | GTMVF 用 60 日動量過濾，動量對齊 confidence ×1.2，反向 ×0.3 — 你驗證這個 |
+| Responsibility | Specific Approach |
+|---------------|------------------|
+| Technical verification of gap_pct | If the framework says SPY is overvalued — does technical analysis support this? (How many SDs from 20MA? RSI?) |
+| IV cross-validation | If the framework says an ETF is undervalued significantly, but IV is extremely high → market may be pricing risks you haven't modeled |
+| Mean reversion probability | How long until gap_pct reverts? (Based on historical volatility and current momentum) |
+| Momentum confirmation/denial | Verify 60-day momentum alignment: aligned = confidence ×1.2, contrary = ×0.3 |
 
-### 概率更新輸出格式
+### Probability Update Output Format
 
 ```
-【GTMVF 量化驗證 — Quant】
-- SPY gap +14.6% (高估):
-  - 技術面: 偏離 20MA [+/-X] SD → [支持/反駁] GTMVF 判斷
-  - 動量: 60 日動量 [上/下] → [確認/否定] 回歸方向
-  - IV 信號: IV Rank [X]th → 市場[已/未] price in 風險
-  - 量化信心: [X]% 此 mispricing 會在 30 天內回歸
+[Multi-Scenario Quantitative Verification — Quant]
+- [ETF] gap [+/-X%] ([overvalued/undervalued]):
+  - Technical: [+/-X] SDs from 20MA → [supports/contradicts] mispricing judgment
+  - Momentum: 60-day momentum [up/down] → [confirms/denies] reversion direction
+  - IV signal: IV Rank [X]th → market [has/has not] priced in risk
+  - Quant confidence: [X]% this mispricing reverts within 30 days
 
-- XLE gap -31.3% (低估):
-  - 技術面: XLE 偏離 20MA [+/-X] SD → [支持/反駁]
-  - 但 ⚠️ 油價體制覆寫: Brent 漲幅 >30% → XLE 目標被 GTMVF 動態上調
-  - 量化信心: [X]% 此 mispricing 可交易
+- [ETF] gap [+/-X%] ([overvalued/undervalued]):
+  - Technical: [ETF] deviation from 20MA [+/-X] SDs → [supports/contradicts]
+  - Commodity regime override (if applicable): [commodity] change >X% → target price dynamically adjusted
+  - Quant confidence: [X]% this mispricing is tradeable
 ```
 
-## 8. Mispricing 偵測 (Black-Scholes Benchmark)
+## 8. Mispricing Detection (Black-Scholes Benchmark)
 
-### 理論價格計算
+### Theoretical Price Calculation
 
-**用於 SPY、QQQ、GLD、TLT 等主要 ETF：**
-- 輸入：S (現貨價格)、K (履約價)、T (到期時間)、r (無風險利率)、σ (IV)
-- 使用 Black-Scholes 公式計算理論 call/put 價格
+**For major ETFs including SPY, QQQ, GLD, TLT:**
+- Inputs: S (spot price), K (strike price), T (time to expiry), r (risk-free rate), σ (IV)
+- Use Black-Scholes formula to calculate theoretical call/put prices
 
-### 定價偏差判斷（CREDIT SPREAD ONLY）
+### Pricing Deviation Assessment (CREDIT SPREAD ONLY)
 
-⚠️ **所有 mispricing 交易建議必須是信用價差。Mispricing 偵測告訴你「哪邊高估」，然後你賣掉高估的那邊。**
+⚠️ **All mispricing trade recommendations must be credit spread structures. Mispricing detection tells you "which side is overpriced" — then you sell the overpriced side.**
 
-| 定價偏差 | 判斷 | 信用價差策略 | 邏輯 |
-|--------|------|-----------|------|
-| Call 高估 (實價 > 理論價 3%+) | Call premium 過貴 | **Bear Call Spread** — 賣高估 Call + 買保護 Call | 收取高估的 call premium ✓ |
-| Put 高估 (實價 > 理論價 3%+) | Put premium 過貴 | **Bull Put Spread** — 賣高估 Put + 買保護 Put | 收取高估的 put premium ✓ |
-| Call 低估 (實價 < 理論價 3%+) | Call premium 便宜 | **不做** — 低估 = 買入機會但我們不做 debit | 觀察，等 IV 回升再賣 ⏸ |
-| Put 低估 (實價 < 理論價 3%+) | Put premium 便宜 | **不做** — 低估 = 買入機會但我們不做 debit | 觀察，等 IV 回升再賣 ⏸ |
+| Pricing Deviation | Assessment | Credit Spread Strategy | Logic |
+|------------------|------------|----------------------|-------|
+| Call overpriced (market > theoretical 3%+) | Call premium too expensive | **Bear Call Spread** — sell overpriced Call + buy protection Call | Collect overpriced call premium ✓ |
+| Put overpriced (market > theoretical 3%+) | Put premium too expensive | **Bull Put Spread** — sell overpriced Put + buy protection Put | Collect overpriced put premium ✓ |
+| Call underpriced (market < theoretical 3%+) | Call premium cheap | **Do nothing** — underpriced = buy opportunity but we don't do debit | Observe, wait for IV recovery ⏸ |
+| Put underpriced (market < theoretical 3%+) | Put premium cheap | **Do nothing** — underpriced = buy opportunity but we don't do debit | Observe, wait for IV recovery ⏸ |
 
-**核心邏輯：Mispricing 偵測只用於找「高估」的一邊來賣。低估 = 觀望，因為利用低估需要買入（debit），違反我們的策略。**
+**Core logic: Mispricing detection is only used to find the "overpriced" side to sell. Underpriced = wait, because exploiting underpriced requires buying (debit), which violates our strategy.**
 
-### Mispricing 強度評分
+### Mispricing Strength Score
 
-| 偏差幅度 | 評分 | 行動 |
-|---------|------|------|
-| 3-5% | 輕微 mispricing | 記錄但不急於行動 |
-| 5-10% | 中度 mispricing | 值得考慮開倉，正常 Kelly |
-| >10% | 顯著 mispricing | 優先考慮，但先問「為什麼市場這樣定價？」可能是市場知道你不知道的事 |
+| Deviation | Score | Action |
+|-----------|-------|--------|
+| 3-5% | Mild mispricing | Record but no urgency |
+| 5-10% | Moderate mispricing | Worth considering entry, normal Kelly |
+| >10% | Significant mispricing | Prioritize consideration, but first ask "why is the market pricing this way?" — market may know something you don't |
 
-**⚠️ 批判思維：>10% 的 mispricing 往往有原因（即將到來的事件、流動性差、結構性變化）。不要假設市場是錯的。**
+**⚠️ Critical thinking: >10% mispricing often has a reason (upcoming event, poor liquidity, structural change). Don't assume the market is wrong.**
 
-### 資料來源
+### Data Sources
 
 - WebSearch: "{ETF} options pricing today", "options implied volatility"
-- 提取 bid-ask midpoint 做為市場價
-- 計算與理論價差異
+- Extract bid-ask midpoint as market price
+- Calculate deviation from theoretical price
 
 ---
 
-## 8. 相關性矩陣 (Correlation Matrix)
+## 9. Correlation Matrix
 
-### 監控配對
+### Monitored Pairs
 
-**主要交易配對：**
-- SPY vs QQQ (大型股 vs 科技股)
-- GLD vs TLT (黃金 vs 長期債券)
-- XLE vs SPY (能源 vs 大盤)
+**Key trading pairs:**
+- SPY vs QQQ (large-cap vs tech)
+- GLD vs TLT (gold vs long-term bonds)
+- XLE vs SPY (energy vs broad market)
 
-### 資料取得
+### Data Retrieval
 
-**優先順序：**
-1. warroom_data.json 中的 correlation matrix（如有）
+**Priority order:**
+1. Local portfolio data correlation matrix (if available)
 2. WebSearch: "SPY QQQ correlation", "GLD TLT correlation"
-3. 計算過去 20 日 log returns 相關係數
+3. Calculate past 20-day log returns correlation coefficient
 
-### 相關性應用
+### Correlation Application
 
-| 配對 | 相關性 | 交易建議 |
-|------|-------|--------|
-| SPY-QQQ | >0.85 | 配對交易空間小，單邊優選 |
-| SPY-QQQ | 0.7-0.85 | 配對交易有機會，套利可行 |
-| SPY-QQQ | <0.7 | 強烈配對交易信號，相關性回復優先 |
-| GLD-TLT | >0.3 | 避免同時做多，波動率分散差 |
-| GLD-TLT | <-0.1 | 風險分散良好，可並行運作 |
-
----
-
-## 9. ⚠️ 信用價差 (CREDIT SPREAD ONLY) 強制規則
-
-### 核心原則
-
-**所有推薦交易必須是信用價差結構。NEVER 建議以下交易：**
-- ❌ Straddle / Strangle（雙邊期權）
-- ❌ Naked Call / Naked Put（裸選擇權）
-- ❌ Debit Spread（借記價差）
-- ❌ 任何單邊期權賭注
-
-### 允許的策略
-
-✅ **Bull Put Spread** (看漲時)
-- 賣 OTM Put + 買更低 Put → 淨收權利金
-
-✅ **Bear Call Spread** (看跌時)
-- 賣 OTM Call + 買更高 Call → 淨收權利金
-
-✅ **Call Ratio Spread** (高度看漲)
-- 賣 2× Call @ K1 + 買 1× Call @ K2 → 淨收權利金，但需嚴格 Delta 管理
-
-### 驗證清單
-
-推薦策略時檢查：
-- [ ] 策略名稱包含 "Spread"？
-- [ ] 是否有限制最大虧損？
-- [ ] 是否收取淨權利金？
-- [ ] 是否符合 Credit Spread 定義？
-
-**如果任何選項答案為 No，則 STOP 並重新設計交易。**
+| Pair | Correlation | Trade Recommendation |
+|------|------------|---------------------|
+| SPY-QQQ | >0.85 | Limited pair trade space, prefer single-leg |
+| SPY-QQQ | 0.7-0.85 | Pair trade viable, arbitrage possible |
+| SPY-QQQ | <0.7 | Strong pair trade signal, correlation reversion priority |
+| GLD-TLT | >0.3 | Avoid simultaneous long, poor vol diversification |
+| GLD-TLT | <-0.1 | Good risk diversification, can run in parallel |
 
 ---
 
-## 10. 數據正確性驗證 (Data Correctness Check)
+## 10. Credit Spread (CREDIT SPREAD ONLY) Mandatory Rules
 
-### 驗證程序
+### Core Principle
 
-**每次輸出前必須執行：**
+**All recommended trades must be credit spread structures. NEVER recommend the following:**
+- ❌ Straddle / Strangle (two-sided options)
+- ❌ Naked Call / Naked Put (unprotected options)
+- ❌ Debit Spread (net debit structure)
+- ❌ Any single-leg options bet
 
-1. **VIX 交叉驗證**
-   - WebSearch 得到的 VIX vs warroom_data.json VIX
-   - 差距 >2 點 → 標記 "⚠️ VIX 數據可能過時，相差 {差距} 點"
+### Permitted Strategies
 
-2. **IV 數據來源確認**
-   - IV 來自幾個來源？ (必須 ≥2)
-   - 來源間差異 >{5%}？ → 標記 "⚠️ IV 數據不確定，來源差異 {差異}%，建議查詢第三來源"
+✅ **Bull Put Spread** (when bullish)
+- Sell OTM Put + buy lower Put → net credit collected
 
-3. **時間戳檢查**
-   - 資料採集時間是否 <15 分鐘前？
-   - 如果 >15 分鐘 → 標記 "⚠️ 數據於 {時間} 採集，已 {分鐘} 分鐘，建議刷新"
+✅ **Bear Call Spread** (when bearish)
+- Sell OTM Call + buy higher Call → net credit collected
 
-4. **warroom_data.json 對齐**
-   - 是否存在 warroom_data.json？
-   - 其中的 Greeks、現倉數據是否與推薦相符？
-   - 如不符 → 標記並提示用戶檢查持倉
+✅ **Call Ratio Spread** (highly bullish)
+- Sell 2× Call @ K1 + buy 1× Call @ K2 → net credit, but requires strict Delta management
 
-### 數據新鮮度標記
+### Verification Checklist
 
-在輸出的每個數據點旁邊加上：
+When recommending a strategy, check:
+- [ ] Does the strategy name contain "Spread"?
+- [ ] Is maximum loss defined?
+- [ ] Is net premium collected?
+- [ ] Does it meet the Credit Spread definition?
+
+**If any answer is No, STOP and redesign the trade.**
+
+---
+
+## 11. Data Correctness Validation
+
+### Validation Procedure
+
+**Must execute before every output:**
+
+1. **VIX Cross-Validation**
+   - VIX from WebSearch vs local portfolio data VIX
+   - Difference >2 points → flag "⚠️ VIX data may be stale, difference: {gap} points"
+
+2. **IV Source Confirmation**
+   - How many sources did IV come from? (must be ≥2)
+   - Source difference >{5%}? → flag "⚠️ IV data uncertain, source difference {diff}%, recommend querying a third source"
+
+3. **Timestamp Check**
+   - Was data collected within the last 15 minutes?
+   - If >15 minutes → flag "⚠️ Data collected at {time}, {minutes} minutes ago, recommend refresh"
+
+4. **Local Portfolio Data Alignment**
+   - Does a local portfolio file exist?
+   - Do the Greeks and position data align with the recommendation?
+   - If not → flag and prompt user to verify positions
+
+### Data Freshness Tagging
+
+Add the following next to each data point in the output:
 ```
-📊 VIX 19.5 (13:42 ET, 3 min ago) ✓ Fresh
+VIX 19.5 (13:42 ET, 3 min ago) ✓ Fresh
 ```
 
 ---
 
-## 11. 輸出格式：信號儀表板
+## 12. Output Format: Signal Dashboard
 
-### 標準輸出結構
+### Standard Output Structure
 
-
-### 信號儀表板表格
+### Signal Dashboard Table
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
-│ 📊 ETF 量化信號儀表板                         時間: 2026-03-24 14:30 |
+│ ETF Quantitative Signal Dashboard                    Time: HH:MM ET |
 ├─────────────────────────────────────────────────────────────────────┤
-│ 指標            │ 當前值        │ 狀態      │ 建議            │ 信心度 │
+│ Indicator        │ Current Value  │ Status    │ Recommendation │ Conf│
 ├─────────────────────────────────────────────────────────────────────┤
-│ SPY IV Rank     │ 45th %ile      │ 中性      │ 無特定偏向      │ 60%   │
-│ SPY IV vs 20HV  │ +1.8%          │ 略高估    │ Bull Put        │ 70%   │
-│ QQQ IV Rank     │ 62nd %ile      │ 略高估    │ 謹慎看漲        │ 65%   │
-│ SKEW (SPY)      │ 118            │ 恐懼      │ Put 高估        │ 75%   │
-│ VIX Term        │ Contango 1.15  │ 正向      │ 時衰有利        │ 80%   │
-│ VIX Adj Kelly   │ 22% (0.7×)     │ 中波動   │ 倉位 22% 資本   │ 70%   │
+│ SPY IV Rank      │ 45th %ile      │ Neutral   │ No bias        │ 60%│
+│ SPY IV vs 20HV   │ +1.8%          │ Sl. high  │ Bull Put       │ 70%│
+│ QQQ IV Rank      │ 62nd %ile      │ Sl. high  │ Cautious bull  │ 65%│
+│ SKEW (SPY)       │ 118            │ Fear      │ Put overpriced │ 75%│
+│ VIX Term         │ Contango 1.15  │ Normal    │ Decay favorable│ 80%│
+│ VIX Adj Kelly    │ 22% (0.7×)     │ Mid-vol   │ 22% of capital │ 70%│
 ├─────────────────────────────────────────────────────────────────────┤
 ```
 
-### Kelly 配置建議
+### Kelly Allocation Recommendation
 
 ```
-資本: $YOUR_CAPITAL
-基礎 Kelly: 32.5% ($10,725)
-VIX 調整 (VIX=26): 0.7× 倍數
-→ 實際 Kelly: 22.75% ($7,508)
+Capital: {{YOUR_CAPITAL}} (configure with your total trading capital)
+Base Kelly: 32.5% of capital
+VIX Adjustment (VIX=26): 0.7× multiplier
+→ Actual Kelly: 22.75% of capital
 
-建議初始倉位: $7,000 - $8,000
-(保留部分現金應對突發機會)
+Suggested initial position: 22-23% of capital
+(Reserve some cash for unexpected opportunities)
 ```
 
-### Greeks 再平衡檢查
+### Greeks Rebalancing Check
 
 ```
-當前持倉 Greeks (from warroom_data.json):
-- Δ (Delta):     +0.08  ✓ 在 ±0.15 範圍內
-- Γ (Gamma):     +0.015 ✓ <0.02 安全
-- Θ (Theta):     +$12/day ✓ 正常
-- ν (Vega):      +0.05  ✓ <0.10 安全
+Current Portfolio Greeks (from local portfolio data, if available):
+- Δ (Delta):     +0.08  ✓ Within ±0.15 range
+- Γ (Gamma):     +0.015 ✓ <0.02 safe
+- Θ (Theta):     +$12/day ✓ Normal
+- ν (Vega):      +0.05  ✓ <0.10 safe
 
-📋 行動: 無需調整，持倉健康
+Action: No adjustment needed, portfolio healthy
 ```
 
-### 數據新鮮度指示
+### Data Freshness Indicators
 
 ```
-📊 數據採集於 2026-03-24 14:27 ET (3 分鐘前) ✓ Fresh
-├─ VIX (CBOE):        19.5  [13:25 ET]    ✓ 新鮮
-├─ SPY IV (MC):       16.8% [13:30 ET]    ✓ 新鮮
-├─ QQQ IV (ThinkorSwim): 17.2% [13:32 ET] ✓ 新鮮
-├─ SKEW (CBOE):       118   [13:28 ET]    ✓ 新鮮
-├─ Portfolio Greeks:    [讀自 warroom_data.json 14:20] ⚠️ 4 分鐘
-└─ 備註: 全部資料 <15 分鐘，可信度高
+Data collected at [timestamp] ([N] minutes ago) ✓ Fresh
+├─ VIX (CBOE):           19.5  [HH:MM ET]    ✓ Fresh
+├─ SPY IV (MC):          16.8% [HH:MM ET]    ✓ Fresh
+├─ QQQ IV (ThinkorSwim): 17.2% [HH:MM ET]   ✓ Fresh
+├─ SKEW (CBOE):          118   [HH:MM ET]    ✓ Fresh
+├─ Portfolio Greeks:      [from portfolio_data.json (if available)]
+└─ Note: All data <15 minutes, high credibility
 
-⚠️ VIX 驗證: WebSearch 19.5 vs warroom_data.json 19.6 (差距 0.1 點) ✓ 一致
+VIX Validation: WebSearch [X] vs local portfolio data [X] (difference [Y] points) ✓ Consistent
 ```
 
 ---
 
-## 12. 執行檢查清單
+## 13. Execution Checklist
 
-**每次使用此 Skill 前：**
+**Before each use of this Skill:**
 
-- [ ] 已通過 WebSearch 或 WebFetch 取得最新 IV 數據？
-- [ ] IV 數據來自至少 2 個獨立來源，差異 <5%？
-- [ ] VIX 與 warroom_data.json 對齐（差距 <2 點）？
-- [ ] 已讀取當前持倉 Greeks 從 warroom_data.json？
-- [ ] 推薦的交易策略是 Bull Put Spread 或 Bear Call Spread？
-- [ ] 已標記所有數據時間戳和新鮮度？
-- [ ] 已檢查所有定價與理論值差異 >3%？
-- [ ] 已應用 VIX 調整後的 Kelly 公式？
+- [ ] Have latest IV data been obtained via WebSearch or WebFetch?
+- [ ] Does IV data come from at least 2 independent sources with difference <5%?
+- [ ] VIX validated across sources (difference <2 points)?
+- [ ] Current portfolio Greeks read from local data (if available)?
+- [ ] Does the recommended trade strategy use Bull Put Spread or Bear Call Spread?
+- [ ] Are all data timestamps and freshness noted?
+- [ ] Have all pricing deviations >3% from theoretical been checked?
+- [ ] Has VIX-adjusted Kelly formula been applied?
 
-**如有任何 ❌，停止並補充缺失資訊。**
-
----
-
-## 13. 工具對應表
-
-| 任務 | 使用工具 | 備註 |
-|------|--------|------|
-| VIX term structure | WebFetch vixcentral.com | 最權威來源 |
-| IV percentile | WebFetch marketchameleon.com | 實時更新 |
-| 期權 skew | WebSearch + WebFetch CBOE | 美股選擇權標準 |
-| 中文波動率文章 | WebSearch 金石、鉅亨網、CMoney | 參考意見 |
-| 實時期權報價 | WebFetch thinkorswim 或實時 API | 需驗證多源 |
-| 持倉 Greeks | 讀取 warroom_data.json | 本地數據 |
-| 回測結果 | 讀取 backtest_results.json | 歷史勝率 |
-
-**禁止：** ❌ 不使用 mcp__paper-search-mcp__search_google_scholar（已廢棄）
+**If any item is ❌, stop and fill in missing information.**
 
 ---
 
-## 14. 常見場景觸發
+## 14. Tool Mapping
 
-### 場景 1: 「VIX 今天多少」
-→ 除了回答 VIX 數字，**必須提供**：
-- VIX rank (vs 52週)
+| Task | Tool | Notes |
+|------|------|-------|
+| VIX term structure | WebFetch vixcentral.com | Most authoritative source |
+| IV percentile | WebFetch marketchameleon.com | Real-time updates |
+| Options skew | WebSearch + WebFetch CBOE | US equity options standard |
+| Chinese vol articles | WebSearch 金石, 鉅亨網, CMoney | Reference opinions (optional) |
+| Real-time options quotes | WebFetch thinkorswim or real-time API | Multi-source verification required |
+| Portfolio Greeks | Read from local portfolio data file (optional) | Local data |
+| Backtest results | Read from historical performance data | Historical win rate |
+
+**Prohibited:** ❌ Do not use deprecated tools
+
+---
+
+## 15. Common Scenario Triggers
+
+### Scenario 1: "What's VIX today"
+→ In addition to answering the VIX number, **must provide**:
+- VIX rank (vs 52 weeks)
 - Term structure (Contango/Backwardation)
-- 對交易的量化含義
+- Quantitative trading implications
 
-### 場景 2: 「SPY 期權推薦」
-→ **必須執行完整流程**：
+### Scenario 2: "SPY options recommendation"
+→ **Must execute full workflow**:
 1. IV Rank + IV vs HV
-2. Skew 分析
-3. Mispricing 檢測
-4. Kelly 倉位計算
-5. Greeks 檢查
-6. 信用價差推薦 (Bull Put / Bear Call)
+2. Skew analysis
+3. Mispricing detection
+4. Kelly position sizing
+5. Greeks check
+6. Credit spread recommendation (Bull Put / Bear Call)
 
-### 場景 3: 「調整現有持倉」
-→ **必須檢查**：
-1. 從 warroom_data.json 讀取當前 Greeks
-2. 判斷是否超過 Delta ±0.15 或 Gamma >0.02
-3. 推薦再平衡交易（必須信用價差）
-4. 計算新 Greeks 目標
+### Scenario 3: "Adjust existing positions"
+→ **Must check**:
+1. Read current Greeks from local portfolio data
+2. Determine if Delta exceeds ±0.15 or Gamma >0.02
+3. Recommend rebalancing trade (must be credit spread)
+4. Calculate new Greeks target
 
-### 場景 4: 「持倉風險管理」
-→ **自動執行**：
-1. 讀取 warroom_data.json
-2. 檢查 VIX（可能需要刷新）
-3. 應用 VIX 調整 Kelly
-4. 計算是否需要平倉部分部位
-5. 標記異常 Greeks
-
----
-
-## 15. 品質保證
-
-### 信心度評分
-
-推薦時提供 **信心度 (Confidence)**：
-- **90-100%**: 多個量化指標一致，資料新鮮
-- **70-89%**: 大部分指標一致，至少 2 個資料來源
-- **50-69%**: 指標混合或資料稍有陳舊
-- **<50%**: ❌ 不提供推薦，要求補充資訊
-
-### 不確定情況處理
-
-如果遇到以下情況，**必須停止並標記**：
-```
-⚠️ 不確定信號，原因：
-- IV 來自不同來源差異 7%（超過 5% 閾值）
-- warroom_data.json 與 WebSearch VIX 差距 3.2 點（超過 2 點閾值）
-- 資料採集於 25 分鐘前（超過 15 分鐘新鮮度）
-
-建議：請重新查詢最新資料或人工確認
-```
+### Scenario 4: "Position risk management"
+→ **Auto-execute**:
+1. Read local portfolio data
+2. Check VIX (may need refresh)
+3. Apply VIX-adjusted Kelly
+4. Calculate whether partial close is needed
+5. Flag abnormal Greeks
 
 ---
 
-## 16. 批判思維框架 (Critical Thinking Framework)
+## 16. Quality Assurance
 
-### 模型懷疑主義 (Model Skepticism)
+### Confidence Scoring
 
-量化分析師最大的風險是 **過度信任模型**。每次輸出前必須問自己：
+Provide **Confidence** with each recommendation:
+- **90-100%**: Multiple quantitative indicators aligned, fresh data
+- **70-89%**: Most indicators aligned, at least 2 data sources
+- **50-69%**: Mixed indicators or slightly stale data
+- **<50%**: ❌ Do not provide recommendation, request additional information
 
+### Handling Uncertainty
+
+If any of the following occur, **must stop and flag**:
 ```
-【模型假設檢查】
-1. Black-Scholes 假設常態分佈 — 但市場有 fat tails，我的 mispricing 判斷在極端情況下是否仍成立？
-2. IV Rank 基於過去 52 週 — 如果市場結構已改變（如 0DTE 盛行），歷史 rank 是否仍有效？
-3. Kelly 公式假設獨立試驗 — 但連續虧損可能有相關性（系統性風險），我是否 oversize？
+⚠️ Uncertain signal, reasons:
+- IV sources differ by 7% (exceeds 5% threshold)
+- VIX from WebSearch vs local portfolio data differ by 3.2 points (exceeds 2-point threshold)
+- Data collected 25 minutes ago (exceeds 15-minute freshness threshold)
+
+Recommendation: Please re-query latest data or confirm manually
 ```
-
-**規則：每份報告至少指出 1 個模型假設可能失效的場景。**
-
-### 魔鬼代言人 (Devil's Advocate) — 量化版
-
-每次產出量化信號後，強制從反面質疑：
-
-```
-【量化信號】SPY IV Rank 75th percentile → 高估 → 賣 credit spread
-【反面論證】
-1. IV 高可能是合理的：如果本週有 FOMC + CPI 雙重事件，IV 應該高
-2. IV Rank 基於過去 52 週，但如果去年是極低波動年，75th 可能只是「回到正常」
-3. 歷史 mean reversion 的前提是沒有結構性變化，但 0DTE options 改變了 vol surface
-【結論】信心從 80% 降至 65%，需要交叉確認事件日曆
-```
-
-### 數據質疑 (Data Skepticism)
-
-不要盲目信任數據源，每個數據點都要問：
-
-| 質疑維度 | 具體問題 | 行動 |
-|---------|--------|------|
-| 時效性 | 這個數據是盤中實時還是昨日收盤？ | 標記時間戳，>15 分鐘打折 |
-| 代表性 | 這個 IV 是 ATM 還是某個特定 strike？ | 確認是 30-delta IV 還是 ATM IV |
-| 計算方法 | 不同來源的 IV 計算方式可能不同 | 注明來源的計算方法差異 |
-| 倖存者偏差 | 回測勝率只看了成功的 ETF？ | 檢查是否包含了表現差的 ETF |
-
-### 矛盾偵測 (Contradiction Detection)
-
-量化指標之間經常矛盾，必須主動識別：
-
-```
-⚠️ 量化矛盾:
-- IV Rank 高（賣信號）但 Vol Term Structure 是 backwardation（買信號/恐慌）
-- 解釋 1: 短期事件推高 VIX，但長期仍看穩 → 可以賣，但縮小倉位
-- 解釋 2: 市場嗅到系統性風險 → 不應賣 vol，等待信號澄清
-- 最可能: [選擇並解釋]
-- 如果錯誤的後果: [具體損失預估]
-```
-
-### 「如果模型錯了」強制段落
-
-每份量化報告結尾必須包含：
-
-```
-### 如果量化信號錯了
-- **模型失效場景**: [例如「如果 VIX 突破 40，Black-Scholes 的常態假設完全失效」]
-- **歷史先例**: [列出類似情況下模型失敗的例子，如 2020 年 3 月]
-- **最大損失**: [按當前推薦計算的最壞情況]
-- **安全閥**: [什麼條件下自動停止交易，例如「VIX >35 時停止所有新倉」]
-```
-
-### 過度擬合警告 (Overfitting Warning)
-
-如果某個量化策略的回測結果 **太好**（勝率 > 80%），自動觸發警告：
-```
-⚠️ 過度擬合風險: 勝率 85% 可能來自：
-1. 回測期間恰好是低波動期（2017、2019）
-2. 只看了有利的 ETF（倖存者偏差）
-3. 參數過度最佳化（Kelly, strike 選擇）
-建議: 降低倉位 30% 作為安全邊際
-```
-
-## 備註
-
-此 Skill 遵循以下原則：
-- ✅ 信用價差優先（Bull Put / Bear Call Spread）
-- ✅ 多源數據交叉驗證
-- ✅ Greeks 管理嚴格
-- ✅ Kelly 公式自適應 VIX
-- ✅ 所有推薦附帶信心度評分
-- ✅ 所有數據附帶時間戳和新鮮度標記
-- ✅ 自動檢查 mispricing 和定價偏差
-- ✅ **批判思維：每個信號都經過魔鬼代言人和模型懷疑主義檢驗**
-- ✅ **矛盾偵測：主動識別指標間的矛盾並解釋**
 
 ---
 
-**最後更新:** 2026-03-24
-**維護者:** the trader (量化交易員)
-**版本:** 2.0 (完整重寫)
+## 17. Critical Thinking Framework
+
+### Model Skepticism
+
+The quant analyst's greatest risk is **over-trusting models**. Before each output, ask:
+
+```
+[Model Assumption Check]
+1. Black-Scholes assumes normal distribution — but markets have fat tails. Does my mispricing judgment hold in extreme scenarios?
+2. IV Rank is based on the past 52 weeks — if market structure has changed (e.g., 0DTE proliferation), is historical rank still valid?
+3. Kelly formula assumes independent trials — but consecutive losses may be correlated (systemic risk). Am I oversizing?
+```
+
+**Rule: Each report must identify at least 1 scenario where a model assumption may fail.**
+
+### Devil's Advocate — Quant Version
+
+After producing each quantitative signal, force a counter-argument:
+
+```
+[Quantitative Signal] SPY IV Rank 75th percentile → overpriced → sell credit spread
+[Counter-argument]
+1. High IV may be justified: if FOMC + CPI both land this week, IV should be high
+2. IV Rank based on past 52 weeks, but if last year was extremely low-vol, 75th may just be "returning to normal"
+3. Historical mean reversion assumes no structural change, but 0DTE options have changed the vol surface
+[Conclusion] Reduce confidence from 80% to 65%; need to cross-check event calendar
+```
+
+### Data Skepticism
+
+Do not blindly trust data sources. For each data point, ask:
+
+| Skepticism Dimension | Specific Question | Action |
+|---------------------|------------------|--------|
+| Timeliness | Is this data intraday real-time or yesterday's close? | Tag timestamp, discount if >15 min |
+| Representativeness | Is this IV ATM or a specific strike? | Confirm if it's 30-delta IV or ATM IV |
+| Calculation method | Different sources may calculate IV differently | Note source's calculation methodology |
+| Survivorship bias | Does backtest win rate only include successful ETFs? | Check if underperforming ETFs are included |
+
+### Contradiction Detection
+
+Quantitative indicators frequently contradict each other. Must actively identify:
+
+```
+⚠️ Quantitative contradiction:
+- IV Rank high (sell signal) but Vol Term Structure is backwardation (buy signal / panic)
+- Explanation 1: Short-term event pushed up VIX, but long-term still stable → can sell, but reduce size
+- Explanation 2: Market smells systemic risk → should not sell vol, wait for signal clarity
+- Most likely: [choose and explain]
+- If wrong, consequences: [specific loss estimate]
+```
+
+### "If the Model is Wrong" Mandatory Paragraph
+
+Each quantitative report must end with:
+
+```
+### If Quantitative Signals Are Wrong
+- **Model failure scenario**: [e.g., "If VIX breaks 40, Black-Scholes normal assumption completely fails"]
+- **Historical precedent**: [List examples of similar model failures, e.g., March 2020]
+- **Maximum loss**: [Worst case calculation based on current recommendation]
+- **Safety valve**: [Under what conditions to automatically stop trading, e.g., "Stop all new positions when VIX >35"]
+```
+
+### Overfitting Warning
+
+If a quantitative strategy's backtest results are **too good** (win rate > 80%), auto-trigger warning:
+```
+⚠️ Overfitting risk: 85% win rate may stem from:
+1. Backtest period coincidentally had low volatility (2017, 2019)
+2. Only looked at favorable ETFs (survivorship bias)
+3. Parameters over-optimized (Kelly, strike selection)
+Recommendation: Reduce position size by 30% as safety margin
+```
+
+## Notes
+
+This Skill follows these principles:
+- ✅ Credit spreads first (Bull Put / Bear Call Spread)
+- ✅ Multi-source data cross-validation
+- ✅ Strict Greeks management
+- ✅ Kelly formula adaptive to VIX
+- ✅ All recommendations include confidence scoring
+- ✅ All data includes timestamps and freshness indicators
+- ✅ Automatic mispricing and pricing deviation checks
+- ✅ **Critical thinking: every signal undergoes devil's advocate and model skepticism review**
+- ✅ **Contradiction detection: actively identify contradictions between indicators and explain**
+
+---
+
+**Version:** 2.0

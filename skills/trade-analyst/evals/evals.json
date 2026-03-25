@@ -3,61 +3,54 @@
   "evals": [
     {
       "id": 1,
-      "prompt": "現在是 2026/3/24 盤前 8:30AM，我有 SPY、QQQ、IWM、GLD 的 credit spread 持倉。昨天以色列停戰消息讓期貨大漲但今早伊朗否認了，期貨回吐。VIX 在 27。幫我做完整盤前分析，包括今天的交易計畫。",
-      "expected_output": "完整盤前分析包含：新聞搜索結果、4 位分析師觀點、首席綜合判斷、具體交易建議（含 ETF、strike、DTE、Kelly sizing），以及對假消息的噪音判斷",
+      "prompt": "Run the full pre-market analysis across SPY, QQQ, IWM, XLE, XLF, GLD, TLT, and SMH. VIX is at 27. Overnight futures were down 0.4% but recovered. There was a geopolitical ceasefire rumor that was then denied, causing whipsaw in futures. I have existing Bull Put spreads on SPY, QQQ, IWM, and GLD. Give me today's trading plan.",
+      "expected_output": "Complete pre-market analysis including news search, 4 analyst perspectives, chief strategist synthesis, and specific trade recommendations with strike prices and Kelly sizing",
       "files": [],
       "expectations": [
-        "分析前先用 WebSearch 搜索了最新市場新聞",
-        "包含對以色列停戰消息的可信度評估",
-        "四位分析師都有各自的分析（macro/sector/quant/event）",
-        "交易建議包含具體的 ETF 名稱和 spread 結構",
-        "交易建議包含 strike 價位或 OTM 距離",
-        "包含 Kelly sizing 或 position sizing 建議",
-        "包含風控提醒（VIX 27 環境下的注意事項）",
-        "輸出使用繁體中文",
-        "至少一位分析師包含魔鬼代言人（反面論證）或「如果我錯了」段落",
-        "首席策略師包含分歧說明或矛盾彙總（不是簡單平均）",
-        "有明確的信心校準（支持 vs 反對證據列舉）",
-        "包含 GTMVF 博弈論分析（參與者、策略、Nash 均衡推演）",
-        "包含 ETF 定價偏差表（market price vs E[X] vs gap_pct vs gap_zone）",
-        "至少兩位分析師提供假說概率更新建議（H0-H5 調整）",
-        "首席策略師綜合各分析師的概率建議並給出最終權重"
+        "Executes WebSearch for latest market news before analysis",
+        "Includes credibility assessment of the ceasefire rumor (flags as noise if insufficient sources)",
+        "Provides perspectives from all 4 analysts (macro, sector, quant, event)",
+        "Produces multi-scenario ETF mispricing table with equilibrium prices and gap_pct",
+        "Includes scenario probability update suggestions from at least 2 analysts",
+        "Chief strategist includes disagreement scan and explicit reasoning for analyst weighting",
+        "Trade recommendations include specific ETF, strike guidance, DTE, and Kelly sizing",
+        "Includes VIX-27 risk management note (0.7x Kelly adjustment)",
+        "At least one analyst provides Devil's Advocate or 'If I'm Wrong' section",
+        "Executive summary in 5-line format at the top of the report",
+        "Output language matches user's language or defaults to English"
       ]
     },
     {
       "id": 2,
-      "prompt": "盤後分析：今天 SPY 跌了 1.8%，VIX 從 27 衝到 31，GLD 反彈 2%，XLE 跌 3%。我的 SPY bull put spread 接近停損。幫我做完整盤後分析和明天的行動計畫。",
-      "expected_output": "盤後總結含 P&L 評估、持倉狀態、明日行動計畫（是否平倉 SPY spread）、具體的下一步操作",
+      "prompt": "Post-market review: SPY dropped 1.8% today, VIX surged from 27 to 31, GLD rallied 2%, XLE fell 3%. My SPY Bull Put spread is near its stop-loss. Give me the post-market analysis and tomorrow's action plan.",
+      "expected_output": "Post-market analysis with P&L assessment, position management recommendations, overnight risk assessment, and tomorrow's preparation",
       "files": [],
       "expectations": [
-        "搜索了今日收盤原因的新聞",
-        "評估了 SPY bull put spread 的停損狀態",
-        "給出明確的平倉/持有/roll 建議",
-        "明日行動計畫有具體時間點和觸發條件",
-        "考慮了 VIX 31 環境的風控調整",
-        "GLD 反彈是否創造新機會的評估",
-        "輸出使用繁體中文",
-        "包含「如果判斷錯誤」的備案計畫",
-        "分析師之間有分歧時，首席策略師解釋了為何選擇某一邊",
-        "VIX 31 環境下的假說權重調整（高 VIX → H1/H5 權重上升）",
-        "包含 gap_pct 分析判斷哪些 ETF 被高估或低估"
+        "Searches for today's market close reasons and catalysts",
+        "Assesses the SPY Bull Put spread status relative to stop-loss",
+        "Provides a clear close/hold/roll recommendation with specific reasoning",
+        "Analyzes GLD rally as potential new opportunity",
+        "Adjusts scenario weights for high-VIX environment (geopolitical/recession scenarios up)",
+        "Includes 'If I Was Wrong' postmortem on morning predictions",
+        "Tomorrow's action plan includes specific time-based triggers and conditions",
+        "Chief strategist explains disagreements between analysts' views",
+        "Output format: 5-line overnight brief + detailed sections"
       ]
     },
     {
       "id": 3,
-      "prompt": "盤中 11:00AM，金石數據剛報導 Fed 官員突然放鴿派言論，SPY 期貨 5 分鐘內漲 0.8%，VIX 從 29 快速降到 26。這是真的機會還是噪音？我應該怎麼做？",
-      "expected_output": "快速評估 Fed 發言真實性、判斷是否為可交易信號、如果是機會則給出具體建議",
+      "prompt": "Intraday 11:00 AM: A Fed official just made an unexpected dovish comment. SPY futures jumped 0.8% in 5 minutes. VIX dropped from 29 to 26. Is this a real opportunity or market noise? What should I do?",
+      "expected_output": "Rapid signal assessment with noise/signal classification, opportunity evaluation, and specific actionable recommendation",
       "files": [],
       "expectations": [
-        "用 WebSearch 驗證了 Fed 官員發言的真實性",
-        "判斷了這是噪音還是信號",
-        "如果是信號，給出了具體的交易建議",
-        "評估了 VIX 下降對 credit spread 策略的影響",
-        "考慮了時效性（盤中機會窗口）",
-        "輸出使用繁體中文",
-        "質疑了市場反應是否過度（5 分鐘漲 0.8% 可能是過度反應）",
-        "考慮了反面情境（如果發言被市場重新解讀為鷹派）",
-        "評估 Fed 鴿派對 GTMVF 假說的影響（H2 概率變化）"
+        "Uses WebSearch to verify the Fed official's comment authenticity",
+        "Classifies as signal or noise based on multi-source confirmation",
+        "Assesses whether 5-minute 0.8% move is an overreaction (questions time frame)",
+        "Evaluates VIX drop impact on credit spread strategy",
+        "If signal: provides specific credit spread recommendation with timing",
+        "Considers scenario probability impact (dovish Fed → policy pivot scenario higher)",
+        "Includes counter-scenario: 'if re-interpreted as hawkish'",
+        "Respects intraday 80-line report length constraint"
       ]
     }
   ]

@@ -1,0 +1,48 @@
+{
+  "skill_name": "macro-analyst",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "The Fed just held rates steady but signaled two cuts later this year. CPI came in at 3.1%, down from 3.4% last month. NFP was +180K, slightly below expectations. What is the current macro regime and how does it affect the ETF universe?",
+      "expected_output": "Macro regime classification with economic cycle phase, ETF impact matrix, scenario probability updates, and at least one Devil's Advocate argument",
+      "files": [],
+      "expectations": [
+        "Classifies the current economic regime (Expansion / Slowdown / Contraction / Recovery)",
+        "Provides ETF impact assessment for SPY, QQQ, TLT, GLD, XLE",
+        "Updates at least 2 scenario probabilities (e.g., base case, Fed pivot, recession)",
+        "Includes a Devil's Advocate section questioning the regime classification",
+        "Provides a confidence rating (e.g., 3/5) with supporting and opposing evidence count",
+        "Includes an 'If I'm Wrong' section with trigger signals",
+        "Uses WebSearch or notes that fresh data should be retrieved"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "The 2Y/10Y yield curve just inverted to -85bp, deepest in 6 months. ISM Manufacturing PMI came in at 47.2 for the third consecutive month below 50. What does this mean for the portfolio?",
+      "expected_output": "Recession risk assessment with yield curve analysis, specific ETF positioning recommendations, and scenario weight adjustments",
+      "files": [],
+      "expectations": [
+        "Identifies the yield curve inversion as a recession signal",
+        "Explains the ISM PMI trend and its economic significance",
+        "Recommends shifting toward defensive ETFs (TLT, GLD, XLU)",
+        "Adjusts recession scenario (H5) weight upward",
+        "Includes at least one contradicting data point or Devil's Advocate argument",
+        "Provides specific credit spread strategy implications"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Strong jobs report: NFP +320K, unemployment dropped to 3.6%, but wages rose 4.2% YoY. At the same time, oil jumped 8% this week on supply news. Assess the macro implications.",
+      "expected_output": "Analysis of the conflicting signals (strong employment vs inflation risk) with scenario probability updates and ETF recommendations",
+      "files": [],
+      "expectations": [
+        "Identifies the contradiction between strong employment and rising inflation risk",
+        "Flags the oil spike as a potential commodity shock scenario trigger",
+        "Discusses Fed implications (less likely to cut with strong jobs + inflation)",
+        "Provides scenario weight adjustments reflecting competing risks",
+        "Includes contradiction detection between the bullish employment and hawkish implications",
+        "Confidence calibration reflects mixed signals (2-3/5)"
+      ]
+    }
+  ]
+}

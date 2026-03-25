@@ -31,27 +31,20 @@ Read skill files for the post-market analysis frameworks:
 - `.skills/skills/trade-analyst\SKILL.md` — chief strategist synthesis + critical thinking
 - `.skills/skills/quant-analyst\SKILL.md` — Greeks/Kelly review
 
-## Step 3: Run Python pipeline
+## Step 3: Load portfolio data (optional)
 
-```
-python pipeline/run_evening_analysis.py
-```
+If you maintain a local portfolio data file, read it for end-of-day Greeks, P&L, and positions.
 
-If warroom_data.json is stale (no 4pm data), first run:
-```
-py run_pipeline.py --push
-```
+**If no file is available**: skip this step. Proceed with WebSearch-only analysis. Note missing portfolio data in the report.
 
-## Step 4: Run reflection scoring
+## Step 4: Self-reflection scoring (manual)
 
-```
-python pipeline/run_reflection.py
-```
+Compare today's pre-market predictions against actual market outcomes:
+- Which analyst predictions were correct? (✓)
+- Which were wrong? (✗)
+- What was the primary reason for each miss?
 
-If run_reflection.py does not exist, use:
-```
-python pipeline/ai_analysts/reflection.py --daily
-```
+This reflection updates your confidence calibration for tomorrow.
 
 ## Step 5: Execute post-market synthesis
 
@@ -66,8 +59,10 @@ Apply trade-analyst critical thinking: "If I Was Wrong" postmortem on today's ca
 
 ## Step 6: Report
 
-- 5-line overnight brief (in 繁體中文)
-- Which post-market analysts ran successfully (✓/✗)
-- P&L summary and reflection scores
+- 5-line overnight brief
+- Which post-market analysts contributed (✓/✗)
+- P&L summary and reflection scores (or "N/A" if no portfolio data)
 - Key WebSearch findings that differed from the morning plan
 - Tomorrow's top priority action items
+
+**Language**: Respond in the user's language. Default to English.

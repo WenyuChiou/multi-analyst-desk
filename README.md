@@ -29,7 +29,7 @@ The result: **structured disagreement as a trading signal**.
 - Every analyst flags where their data might be wrong
 - Consensus between analysts triggers a **position-size reduction**, not confidence
 
-The engine powering the analysis is **GTMVF** (Game-Theoretic Market Valuation Framework): each ETF receives a Nash equilibrium price derived from probability-weighted macro scenarios. A gap of more than 5% between market price and equilibrium price is your actionable mispricing signal.
+The analytical engine is a **multi-scenario equilibrium pricing framework**: each ETF receives an equilibrium price derived from probability-weighted macro scenarios (configurable by the user). A gap between market price and equilibrium price is your actionable mispricing signal.
 
 ---
 
@@ -55,14 +55,14 @@ The engine powering the analysis is **GTMVF** (Game-Theoretic Market Valuation F
 |  MACRO ANALYST   |   | SECTOR ANALYST   |   |  QUANT ANALYST  |
 | Fed, yield curve |   | ETF rotation     |   | IV/HV, Greeks   |
 | CPI, GDP, DXY    |   | sector flows     |   | Kelly, skew     |
-| H0/H2/H5 update  |   | relative strength|   | GTMVF verify    |
+| scenario updates  |   | relative strength|   | mispricing verify|
 +--------+---------+   +--------+---------+   +--------+--------+
          |                      |                       |
          |        +-------------+-------------+         |
          |        |      EVENT ANALYST        |         |
          |        |  FOMC, NFP, CPI calendar  |         |
          |        |  geopolitical risk        |         |
-         |        |  H1/H4 probability updates|         |
+         |        |  scenario probability updates|      |
          |        +-------------+-------------+         |
          |                      |                       |
          +----------------------+-----------------------+
@@ -95,7 +95,7 @@ The engine powering the analysis is **GTMVF** (Game-Theoretic Market Valuation F
 
 **Data flow:**
 1. **Gather** — Market Intel pulls live English + Chinese financial sources simultaneously
-2. **Analyze** — Four analysts work independently; each updates GTMVF hypothesis probabilities
+2. **Analyze** — Four analysts work independently; each updates scenario probabilities from their domain
 3. **Disagree** — Chief Strategist identifies analyst conflicts and weights by current regime
 4. **Synthesize** — Specific credit spread recommendations with explicit reasoning for the side chosen
 5. **Filter** — Opportunity Detector classifies output as actionable signal or stand-down
@@ -107,10 +107,10 @@ The engine powering the analysis is **GTMVF** (Game-Theoretic Market Valuation F
 | Skill | Role | What It Produces |
 |-------|------|------------------|
 | **trade-analyst** | Chief Strategist — orchestrates all analysts and owns the final call | Pre-market, intraday, and post-market reports with credit spread recommendations |
-| **macro-analyst** | Economic regime and Fed policy specialist | GTMVF hypothesis updates (H0 soft landing, H2 Fed pivot, H5 recession); ETF regime implications |
+| **macro-analyst** | Economic regime and Fed policy specialist | Scenario probability updates (base case, Fed pivot, recession, etc.); ETF regime implications |
 | **sector-analyst** | ETF rotation and relative strength specialist | Sector flow signals; XLE/SPY, GLD/SPY, TLT/SPY ratio analysis; rotation triggers |
-| **quant-analyst** | Volatility and options pricing specialist | IV rank, HV, skew, term structure; Kelly position sizing; GTMVF mispricing verification |
-| **event-analyst** | Economic calendar and geopolitical risk specialist | Event-driven IV crush timing; FOMC/NFP/CPI risk windows; H1 geopolitical and H4 oil shock updates |
+| **quant-analyst** | Volatility and options pricing specialist | IV rank, HV, skew, term structure; Kelly position sizing; mispricing signal verification |
+| **event-analyst** | Economic calendar and geopolitical risk specialist | Event-driven IV crush timing; FOMC/NFP/CPI risk windows; geopolitical and commodity shock updates |
 | **market-intel** | Real-time intelligence gatherer | Cross-validated news from English + Chinese sources; credibility scores; structured ETF impact assessments |
 | **opportunity-detector** | Intraday anomaly detector and noise filter | Signal vs. noise classification; stand-down calls; fast-turnaround credit spread opportunities |
 
@@ -118,7 +118,7 @@ The engine powering the analysis is **GTMVF** (Game-Theoretic Market Valuation F
 
 | Task | Trigger | Output |
 |------|---------|--------|
-| **premarket-ai-analysis** | 8:30 AM ET | Full 4-analyst report, GTMVF table, hypothesis updates, 3+ trade recs |
+| **premarket-ai-analysis** | 8:30 AM ET | Full 4-analyst report, multi-scenario mispricing table, scenario updates, 3+ trade recs |
 | **intraday-ai-analysis** | Hourly (market hours) | Anomaly snapshot, portfolio Greeks check, go/no-go call, under 80 lines |
 | **postmarket-ai-analysis** | 4:30 PM ET | P&L review vs. morning predictions, overnight risk, next-day plan, postmortem |
 
@@ -141,20 +141,20 @@ Risk alert: SPY spread approaching stop-loss -- handle first
 Disagreement: Quant sees IV overpricing (bullish), but FOMC this week -- Event overrides Quant
 Date: 2026-03-24  |  Next check: 14:00 ET
 
-GTMVF Mispricing Table:
-ETF   | Price | E[X]  | Gap    | Zone      | Signal
-------|-------|-------|--------|-----------|----------
-SPY   | $534  | $498  | +7.2%  | uncertain | Overvalued
-QQQ   | $448  | $410  | +9.3%  | uncertain | Overvalued
-GLD   | $296  | $310  | -4.5%  | noise     | Neutral
-XLE   | $88   | $105  | -16.2% | strong    | Undervalued
-TLT   | $87   | $91   | -4.4%  | noise     | Neutral
+Multi-Scenario Mispricing Table:
+ETF   | Price | E[Price] | Gap    | Zone      | Signal
+------|-------|----------|--------|-----------|----------
+SPY   | $534  | $498     | +7.2%  | uncertain | Overvalued
+QQQ   | $448  | $410     | +9.3%  | uncertain | Overvalued
+GLD   | $296  | $310     | -4.5%  | noise     | Neutral
+XLE   | $88   | $105     | -16.2% | strong    | Undervalued
+TLT   | $87   | $91      | -4.4%  | noise     | Neutral
 
-Hypothesis Weights (updated from today's news):
-  H0 Soft landing:   0.18  (down -- PMI declined 3rd consecutive month)
-  H1 Geopolitical:   0.35  (steady -- Middle East tensions stable)
-  H2 Fed pivot:      0.20  (up -- dovish comment from Fed Governor Waller)
-  H4 Oil shock:      0.15  (steady -- Brent $82, no supply disruption)
+Scenario Weights (updated from today's news):
+  H0 Base Case:      0.18  (down -- PMI declined 3rd consecutive month)
+  H1 Geopolitical:   0.35  (current active risk -- search for latest)
+  H2 Policy Pivot:   0.20  (up -- dovish signals from central bank)
+  H4 Supply Shock:   0.15  (steady -- commodity markets stable)
   H5 Recession:      0.28  (up -- jobless claims rising 4th consecutive week)
 
 Macro: Slowdown regime. 2Y/10Y inverted at -42bp. Fed held at 4.25-4.50%.
@@ -181,7 +181,7 @@ What ETFs are mispriced right now?
 
 **What you get back:**
 ```
-Running GTMVF analysis -- 2026-03-24 11:42 ET
+Running multi-scenario mispricing analysis -- [current date/time]
 
 ETF Mispricing Summary:
   QQQ: +9.3% overvalued (uncertain zone) --> Bear Call Spread candidate
@@ -276,15 +276,15 @@ Open `skills/trade-analyst/SKILL.md` and update these parameters:
 
 | Parameter | Default | What to Change |
 |-----------|---------|----------------|
-| `$YOUR_CAPITAL` | placeholder | Your total trading capital in USD (used for Kelly position sizing) |
+| `{{YOUR_CAPITAL}}` | 50000 | Your total trading capital in USD (used for Kelly position sizing). Set via plugin configuration or state it in your prompt: "My capital is $X". |
 | ETF universe | SPY, QQQ, IWM, XLE, XLF, GLD, TLT, SMH, XLU | Add or remove ETFs to match your portfolio |
 | DTE | 30 days | Target days-to-expiration for credit spreads |
 | Kelly range | 0.25–0.75 | Minimum and maximum Kelly fraction |
-| Output language | English | Change the output language directive in each skill file |
+| Output language | English | Say "respond in Chinese" or set LANGUAGE in plugin config. All skills default to English. |
 
-**Optional: live data file**
+**Optional: local portfolio data file**
 
-Drop a `warroom_data.json` file in your project root to feed live Greeks, portfolio positions, and pre-computed GTMVF gap values directly to the analysts. When present, analysts read from it first before falling back to WebSearch. See `examples/warroom_data_sample.json` for the expected schema.
+Place a `portfolio_data.json` file in your project root with your current positions, Greeks, and buying power. When present, analysts read it first before falling back to WebSearch. Without it, all analysts work fully standalone using live data from public sources. See `examples/warroom_data_sample.json` for an example of the data structure.
 
 ---
 
@@ -295,7 +295,7 @@ Drop a `warroom_data.json` file in your project root to feed live Greeks, portfo
 - WebSearch access enabled in Claude Code settings
 
 **Optional:**
-- `warroom_data.json` — live market data file updated by your own data pipeline. Without it, all analysts gather data via WebSearch from public sources automatically.
+- `portfolio_data.json` — local file with your current positions, Greeks, and buying power. Without it, all analysts gather data via WebSearch from public sources automatically. No data pipeline setup required.
 
 No brokerage API keys required. All market data is gathered from public financial sources.
 
@@ -309,7 +309,7 @@ Every pre-market report follows this fixed structure:
 5-line executive summary
   regime, VIX, confidence, top action, next check
 
-GTMVF Mispricing Table
+Multi-Scenario Mispricing Table
   all ETFs: price, equilibrium, gap, zone, signal
 
 4 Analyst Perspectives (independent)

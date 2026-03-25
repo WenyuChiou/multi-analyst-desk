@@ -69,28 +69,28 @@ description: "🔥 SECTOR ROTATION ALERT: Analyze ETF relative strength, fund fl
 - QQQ vs IWM比率上升 = 成長風格領先 → SMH、QQQ看多
 - IWM vs QQQ比率上升 = 價值風格領先 → XLE、XLF看多
 
-## GTMVF 博弈論職責 — ETF 目標價驗證
+## Multi-Scenario Pricing — Sector Validation Role
 
-### 核心任務
+### Core Task
 
-Sector 分析師負責驗證 GTMVF 的 ETF 目標價是否合理，並根據部門輪動信號建議調整：
+The Sector Analyst validates whether ETF target prices implied by the current scenario mix are reasonable, using rotation signals:
 
-| 你的職責 | 具體做法 |
+| Your Role | How |
 |---------|--------|
-| 驗證目標價 | GTMVF 說 XLE 在 H1 場景下目標 $130 — 這合理嗎？根據目前輪動信號判斷 |
-| 識別 mispricing | 如果 XLE/SPY 比率顯示 XLE 明顯偏離歷史均值 → 支持或反駁 GTMVF 的 gap_pct |
-| 建議權重調整 | 資金流向如果顯示 risk-off → H1/H5 權重應上升；risk-on → H0 權重應上升 |
+| Validate scenario target prices | Does the rotation data support or contradict implied ETF prices for each scenario? |
+| Identify mispricing | If XLE/SPY ratio shows significant deviation from historical mean → support or refute the gap_pct signal |
+| Suggest scenario weight adjustments | Risk-off fund flows → geopolitical/recession scenarios should have higher weight; risk-on → base case weight should rise |
 
-### 概率更新輸出格式
+### Scenario Update Output Format
 
 ```
-【GTMVF 驗證 — Sector】
-- ETF 目標價檢查:
-  - XLE GTMVF 目標 $88.5 vs Sector 分析估值 $[你的估計] → [一致/偏高/偏低]
-  - GLD GTMVF 目標 $415 vs 避險需求信號 → [一致/偏高/偏低]
-- 輪動信號對假說的影響:
-  - risk-off 資金流 → H1(伊朗) + H5(衰退) 概率 ↑
-  - XLE 領漲但 IWM 也漲 → 可能是通膨交易而非衰退 → H5 概率 ↓
+[Multi-Scenario Validation — Sector]
+- ETF target price check:
+  - XLE scenario target $[value] vs Sector analysis estimate $[your estimate] → [aligned / too high / too low]
+  - GLD scenario target $[value] vs safe-haven demand signal → [aligned / too high / too low]
+- Rotation signals' impact on scenarios:
+  - Risk-off fund flows → geopolitical + recession scenario probabilities ↑
+  - XLE leading but IWM also rising → may be inflation trade, not recession → recession scenario ↓
 ```
 
 ## 交易觀點轉化

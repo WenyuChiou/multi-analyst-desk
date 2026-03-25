@@ -34,13 +34,11 @@ Read the following skill files to use their full analysis frameworks:
 - `.skills/skills/quant-analyst\SKILL.md` — IV/Greeks/Kelly framework
 - `.skills/skills/trade-analyst\SKILL.md` — chief strategist synthesis
 
-## Step 3: Run Python pipeline (structured data)
+## Step 3: Load portfolio data (optional)
 
-```
-python pipeline/run_morning_analysis.py
-```
+If you maintain a local portfolio data file (e.g., `portfolio_data.json`) with your current positions, Greeks, and buying power, read it now to incorporate into the analysis.
 
-This prepares context from warroom_data.json (Greeks, positions, VIX snapshot).
+**If no local file is available**: skip this step — the analysis will rely entirely on WebSearch data and any positions you describe manually. The skill works fully standalone without a data file.
 
 ## Step 4: Execute full analysis
 
@@ -55,14 +53,12 @@ Apply the trade-analyst SKILL.md critical thinking rules: Devil's Advocate, Cont
 
 ## Step 5: Report
 
-- 5-line executive summary (in 繁體中文)
-- Which analysts ran successfully (✓/✗)
+- 5-line executive summary
+- Which analysts contributed (✓/✗)
 - Key WebSearch findings that influenced judgment
 - Top trade recommendations with Kelly sizing
-- Any errors or warnings
+- Any data gaps or warnings
 
-If the pipeline fails due to missing warroom_data.json, first run:
-```
-py run_pipeline.py
-```
-Then retry.
+**Language**: Respond in the user's language. Default to English.
+
+**If portfolio data is unavailable**: note it in the report and proceed with WebSearch-only analysis. Omit Greeks/P&L sections or mark them as "N/A — no portfolio data loaded".

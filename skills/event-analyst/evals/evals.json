@@ -1,0 +1,35 @@
+{
+  "skill_name": "event-analyst",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "FOMC decision is in 4 days. Current Fed funds rate is 4.5%. Market is pricing 60% probability of a hold, 40% probability of a 25bp cut. SPY IV is elevated at 72nd percentile. What is the event risk assessment and what should I do with my current positions?",
+      "expected_output": "Event risk analysis with IV premium calculation, pre/post event strategy timing, and specific position management recommendations",
+      "files": [],
+      "expectations": [
+        "Identifies FOMC as a 5/5 binary risk event",
+        "Calculates or estimates event IV premium relative to baseline",
+        "Recommends NOT opening new credit spreads in T-7 to T-3 window",
+        "Plans post-event T+1 to T+3 window as optimal credit spread entry",
+        "Discusses the 60/40 probability split and its implications for direction",
+        "Recommends holding existing positions unless near stop-loss",
+        "Uses WebSearch to verify current Fed expectations"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Breaking news: a major geopolitical escalation in an oil-producing region. XLE spiked 5% in the first 30 minutes of trading. GLD is up 2.3%. SPY is down 1.8%. What is the event-driven analysis and credit spread response?",
+      "expected_output": "Geopolitical event assessment with credibility scoring, ETF impact analysis, and credit spread timing recommendation",
+      "files": [],
+      "expectations": [
+        "Triggers multi-source verification (requires 3+ sources for geopolitical events)",
+        "Assesses credibility score and flags if sources are insufficient",
+        "Evaluates XLE and GLD moves against the generic geopolitical impact framework",
+        "Determines whether this is a buy or wait signal based on IV level",
+        "Does NOT recommend opening new credit spreads while IV is spiking",
+        "Plans post-stabilization entry if IV crush is expected",
+        "Classifies the event as noise vs signal based on multi-source confirmation"
+      ]
+    }
+  ]
+}

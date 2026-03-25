@@ -1,7 +1,7 @@
 {
   "name": "multi-analyst-desk",
-  "description": "Multi-analyst AI team that detects ETF mispricing using game theory. 4 specialists (macro, sector, quant, event) + chief strategist produce pre-market, intraday, and post-market reports with credit spread recommendations. Unique features: Nash equilibrium pricing model, bilingual news intelligence (EN + Chinese sources), built-in critical thinking (Devil's Advocate, contradiction detection), and disagreement-driven synthesis instead of consensus averaging.",
-  "version": "1.0.0",
+  "description": "A multi-analyst AI team for ETF options trading. Four specialists (macro, sector, quant, event) plus a chief strategist produce pre-market, intraday, and post-market reports with actionable credit spread recommendations. Features: disagreement-driven synthesis instead of consensus averaging, multi-scenario equilibrium pricing, bilingual news intelligence (English + Chinese sources), built-in critical thinking (Devil's Advocate, contradiction detection), and VIX-adjusted Kelly position sizing. Works fully standalone via WebSearch — no external data pipeline required.",
+  "version": "1.1.0",
   "author": {
     "name": "Wen-Yu Chiou",
     "email": "wenyuchiou1234@gmail.com"
@@ -12,8 +12,6 @@
     "ETF",
     "options",
     "credit-spread",
-    "mispricing",
-    "game-theory",
     "market-analysis",
     "multi-analyst",
     "bilingual",
@@ -21,26 +19,42 @@
     "options-greeks",
     "kelly-sizing",
     "volatility",
-    "nash-equilibrium",
-    "quant"
+    "quant",
+    "macro",
+    "sector-rotation",
+    "event-driven"
   ],
   "homepage": "https://github.com/WenyuChiou/multi-analyst-desk",
   "strict": false,
+  "configuration": {
+    "YOUR_CAPITAL": {
+      "description": "Your total trading capital in USD, used for Kelly position sizing calculations",
+      "type": "string",
+      "default": "50000",
+      "example": "100000"
+    },
+    "LANGUAGE": {
+      "description": "Output language preference. Default is English; Traditional Chinese is also supported.",
+      "type": "string",
+      "default": "English",
+      "options": ["English", "Traditional Chinese", "Simplified Chinese"]
+    }
+  },
   "examples": [
     {
-      "title": "Run pre-market analysis",
-      "prompt": "Run premarket analysis",
-      "description": "4-analyst team produces GTMVF mispricing table, hypothesis probability updates, and credit spread recommendations with Kelly sizing"
+      "title": "Full pre-market analysis",
+      "prompt": "Run the full pre-market analysis across SPY, QQQ, IWM, XLE, XLF, GLD, TLT, and SMH. I want the 4-analyst team breakdown plus top 3 credit spread recommendations with Kelly sizing.",
+      "description": "4-analyst team produces multi-scenario mispricing table, hypothesis probability updates, and credit spread recommendations with Kelly sizing"
     },
     {
-      "title": "Find mispriced ETFs",
-      "prompt": "What ETFs are mispriced right now?",
-      "description": "GTMVF engine calculates Nash equilibrium prices across the ETF universe and identifies tradeable gaps"
+      "title": "Intraday spike scan",
+      "prompt": "The VIX just spiked 15% and XLE is down 3%. Run an intraday scan — is this a tradeable signal or noise? If signal, give me a specific credit spread recommendation.",
+      "description": "Opportunity-detector runs noise vs signal classification, then trade-analyst provides actionable recommendation if warranted"
     },
     {
-      "title": "Post-market review",
-      "prompt": "Give me the postmarket review",
-      "description": "End-of-day P&L review, overnight risk assessment, and next-day action plan with chief strategist postmortem"
+      "title": "Daily workflow setup",
+      "prompt": "Set up my daily trading workflow: schedule a pre-market analysis at 8:30 AM ET, hourly intraday checks during market hours, and a post-market review at 4:30 PM ET.",
+      "description": "Configures all three scheduled tasks for automated daily ETF options workflow"
     }
   ],
   "skills": [

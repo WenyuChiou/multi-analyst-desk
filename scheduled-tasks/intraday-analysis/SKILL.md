@@ -30,13 +30,11 @@ Use WebFetch on key article URLs for full content when a major development is de
 - `.skills/skills/trade-analyst\SKILL.md` — intraday adjustment framework (80-line limit)
 - `.skills/skills/quant-analyst\SKILL.md` — mispricing detection (load if anomaly detected or on first intraday check)
 
-## Step 3: Read current portfolio state
+## Step 3: Load portfolio state (optional)
 
-```
-py run_pipeline.py --light
-```
+If you maintain a local portfolio data file, read it for current Greeks, P&L, and positions.
 
-Read `docs/data/warroom_data.json` for current Greeks, P&L, and positions.
+**If no file is available**: skip this step. Proceed with WebSearch-only analysis and any positions described manually. Note missing portfolio data in the report.
 
 ## Step 4: Intraday analysis (MAX 80 lines per trade-analyst spec)
 

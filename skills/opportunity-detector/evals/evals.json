@@ -1,0 +1,51 @@
+{
+  "skill_name": "opportunity-detector",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "VIX just spiked 15% in the last 30 minutes and XLE dropped 3.2%. It's 11:30 AM ET. No major economic data scheduled today. Is this a tradeable signal or noise?",
+      "expected_output": "Noise vs signal classification with multi-source verification, opportunity type identification, and either a specific credit spread recommendation or an explicit stand-down call",
+      "files": [],
+      "expectations": [
+        "Triggers anomaly detection (VIX >10% and ETF >2% both met)",
+        "Executes WebSearch to find the cause of the move",
+        "Requires 3+ sources before classifying as signal",
+        "Applies noise vs signal framework (duration, source count, reversion check)",
+        "If signal: classifies opportunity type (vol mispricing, mean reversion, trend continuation, event arb)",
+        "Provides specific Bull Put or Bear Call recommendation with strike guidance",
+        "If noise: issues explicit stand-down with next check time",
+        "Outputs in the standardized opportunity or stand-down format"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "GLD just dropped 1.8% in 20 minutes. It recovered half the drop (now -0.9%) in the last 10 minutes. No news found after checking 2 sources. Should I act?",
+      "expected_output": "Noise classification with clear stand-down recommendation",
+      "files": [],
+      "expectations": [
+        "Identifies partial recovery within 30 minutes as a noise characteristic",
+        "Notes that only 2 sources found = insufficient confirmation (need 3+)",
+        "Classifies as NOISE: movement not sustained and poorly sourced",
+        "Issues explicit stand-down recommendation (⏸️ Stand Down format)",
+        "Provides reasoning: 'price partially recovered within 30 minutes = typical noise pattern'",
+        "Specifies next check time",
+        "Does NOT recommend opening any position based on this data"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Fed official just made a surprise dovish comment — confirmed by Reuters, Bloomberg, and CNBC. SPY futures up 1.2% in 5 minutes, VIX dropped from 24 to 21. It's 2:00 PM ET. What is the opportunity?",
+      "expected_output": "Signal classification with event arbitrage opportunity assessment and specific credit spread recommendation",
+      "files": [],
+      "expectations": [
+        "Classifies as SIGNAL: 3+ sources confirmed, sustained price move",
+        "Identifies opportunity type: event arb — post-event IV crush (VIX dropping)",
+        "Assesses time sensitivity: 2 PM gives 2 hours of market time to act",
+        "Recommends Bull Put Spread on SPY or QQQ (dovish = bullish for equities)",
+        "Provides strike guidance (OTM put spread below current price)",
+        "Includes Kelly sizing note relative to {{YOUR_CAPITAL}}",
+        "Includes risk: 'if comment is re-interpreted as insufficient → SPY reversal'"
+      ]
+    }
+  ]
+}

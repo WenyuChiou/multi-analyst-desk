@@ -1,0 +1,34 @@
+{
+  "skill_name": "sector-analyst",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "XLE is up 4.2% this week while SPY is flat and QQQ is down 1.5%. IWM is down 2%. GLD is up 1.8%. What does this sector rotation pattern tell us, and what credit spread opportunities does it suggest?",
+      "expected_output": "Sector rotation analysis with relative strength scores, rotation stage identification, and specific credit spread recommendations",
+      "files": [],
+      "expectations": [
+        "Computes or estimates relative strength ratios (XLE/SPY, QQQ/SPY, IWM/SPY)",
+        "Identifies the rotation pattern (risk-off with energy/gold outperforming)",
+        "Classifies the economic cycle stage implied by this rotation",
+        "Includes Devil's Advocate questioning whether this is a real rotation or a short-term anomaly",
+        "Provides specific credit spread suggestions tied to the rotation signal",
+        "Checks for false signal indicators (month-end rebalance, OpEx, single-source bias)",
+        "Includes an 'If rotation judgment is wrong' section"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "SMH (semiconductors) just broke out to a new 52-week high, up 8% in 2 days. The XLF/SPY ratio is at a 6-month high. IWM is keeping pace with SPY. Characterize this sector environment.",
+      "expected_output": "Risk-on sector analysis with growth/value rotation assessment and credit spread positioning",
+      "files": [],
+      "expectations": [
+        "Identifies risk-on environment (tech leadership, financial strength)",
+        "Notes SMH/QQQ ratio implications for semiconductor-led growth",
+        "Assesses whether IWM parity with SPY signals broad participation",
+        "Recommends Bull Put Spread candidates in leading sectors",
+        "Flags potential false signal risk (single-day breakouts can be faded)",
+        "Provides scenario weight implications (base case / expansion scenario favored)"
+      ]
+    }
+  ]
+}

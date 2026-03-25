@@ -39,7 +39,7 @@ description: "Real-time trading opportunity detection and noise filtering skill.
 **噪音特徵（不要交易）：**
 - 價格在 30 分鐘內回到波動前水平
 - 只有一個消息源，其他媒體未跟進
-- 消息被官方否認（如今天伊朗否認停戰談判）
+- Message was officially denied (e.g., a ceasefire rumor denied by official sources)
 - 技術性原因（流動性差、fat finger、algorithmic cascade）
 - 與基本面無關的情緒波動
 
@@ -79,7 +79,7 @@ description: "Real-time trading opportunity detection and noise filtering skill.
 ```
 ## 🔍 偵測到機會: [ETF] [機會類型]
 
-**觸發原因**: 一句話（例：「以色列停戰消息被否認 → GLD 超跌反彈機會」）
+**Trigger**: One sentence (e.g., "Geopolitical ceasefire rumor denied → GLD oversold bounce opportunity")
 **噪音/信號**: 信號（可信度 4/5，3 個來源確認）
 **機會類型**: Vol 錯定 — 恐慌推高 IV，但基本面未變
 **方向**: Bull Put Spread
@@ -116,5 +116,5 @@ description: "Real-time trading opportunity detection and noise filtering skill.
 - **寧可錯過也不要做錯**：噪音造成的損失遠大於錯過一個機會
 - **量化風險**：每個建議必須有最大損失金額和佔 portfolio 比例
 - **不做預測，做反應**：你不知道市場會往哪走，但你知道如果它往某個方向走，你該怎麼做
-- **繁體中文輸出**
-- **只做 ETF credit spread**：除非 the trader 明確要求其他
+- **Language**: Respond in the user's language. Default to English. Chinese output is supported.
+- **ETFs only**: Credit spreads on ETFs only, unless the user explicitly requests otherwise

@@ -1,0 +1,35 @@
+{
+  "skill_name": "market-intel",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Gather market intelligence for today's pre-market session. I need to know what happened overnight and what the key themes are for the trading day.",
+      "expected_output": "Structured market intelligence report with Top 3 headlines, credibility scores, noise warnings, ETF impact matrix, and key indicator snapshot",
+      "files": [],
+      "expectations": [
+        "Executes at least 3-5 WebSearch queries covering different dimensions (broad market, Fed, geopolitical, ETF-specific)",
+        "Searches both English and Chinese sources",
+        "Assigns credibility scores (1-5) to each news item",
+        "Flags any unconfirmed or low-credibility news with [UNCONFIRMED] or [NOISE] labels",
+        "Produces the structured output format: Top 3 headlines, noise warnings, ETF impact matrix, key indicators",
+        "Notes data freshness and source timestamps",
+        "At least one news item is cross-validated between English and Chinese sources"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "There's a rumor spreading on social media that the Fed is holding an emergency meeting. SPY futures dropped 0.5% in the past 10 minutes. Verify this and assess.",
+      "expected_output": "Multi-source verification report classifying the rumor as confirmed, unconfirmed, or noise, with appropriate action recommendation",
+      "files": [],
+      "expectations": [
+        "Immediately runs WebSearch to verify the Fed emergency meeting claim",
+        "Checks official Fed sources (federalreserve.gov) and major newswires (Reuters, AP, Bloomberg)",
+        "Assigns credibility score: if only social media → 1-2/5",
+        "Labels appropriately: [UNCONFIRMED] or [NOISE] if not verified by major sources",
+        "Does NOT recommend trading action based on unconfirmed social media rumor",
+        "Notes that 0.5% SPY futures drop could be noise (< 30bp threshold for meaningful signal)",
+        "Advises waiting for official confirmation before any trading decision"
+      ]
+    }
+  ]
+}
