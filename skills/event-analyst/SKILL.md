@@ -5,6 +5,12 @@ description: "Event-driven analyst skill. Tracks economic calendar events, geopo
 
 # 事件驅動分析師 (Event-Driven Analyst)
 
+## Configuration
+- LANGUAGE: English (set to "zh-TW" for Traditional Chinese)
+- CAPITAL: $10,000 (customize to your portfolio size)
+- If any data source is unavailable, state what's missing and analyze with available data only.
+
+
 ## 核心職責
 事件分析師使用多源驗證系統追蹤經濟事件、地緣政治風險、財報季及期權到期，評估事件對隱含波動率 (IV) 的影響，並識別 **Credit Spread 開倉的最佳時機（事件後 IV 下降期間）**。
 
@@ -22,7 +28,7 @@ description: "Event-driven analyst skill. Tracks economic calendar events, geopo
 - WebSearch: `"華爾街見聞 經濟數據"`
 
 ### C. 地緣政治風險 (Geopolitical events)
-- WebSearch: `"geopolitical risk {today_date}"`, `"Iran Israel tensions"`, `"Russia Ukraine"`, `"US China trade"`
+- WebSearch: `"geopolitical risk {today_date}"`, `"current geopolitical risks"`, `"Russia Ukraine"`, `"US China trade"`
 - WebSearch: `"sanctions updates 2026"`, `"military conflict"`, `"election schedule"`
 - WebSearch: `"華爾街見聞 地緣政治"`, `"鉅亨網 國際政治"`
 
@@ -660,5 +666,5 @@ if >70% decay by T+1, this is a one-time noise event — do not adjust strategy
 
 ## Language Configuration
 
-Respond in the user's language. Default to **English** if no language preference is specified. Chinese output is supported — set your preference in the plugin configuration or state it in your prompt.
+Output in the configured LANGUAGE. Default to English if not set.
 

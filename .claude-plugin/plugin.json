@@ -37,7 +37,11 @@
       "description": "Output language preference. Default is English; Traditional Chinese is also supported.",
       "type": "string",
       "default": "English",
-      "options": ["English", "Traditional Chinese", "Simplified Chinese"]
+      "options": [
+        "English",
+        "Traditional Chinese",
+        "Simplified Chinese"
+      ]
     }
   },
   "examples": [
@@ -65,5 +69,7 @@
     "./skills/event-analyst",
     "./skills/market-intel",
     "./skills/opportunity-detector"
-  ]
+  ],
+  "license": "MIT",
+  "repository": "https://github.com/WenyuChiou/multi-analyst-desk"
 }

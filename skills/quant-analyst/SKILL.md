@@ -5,6 +5,12 @@ description: "Quantitative analyst skill for ETF options trading. Specializes in
 
 # Quant Analyst Skill
 
+## Configuration
+- LANGUAGE: English (set to "zh-TW" for Traditional Chinese)
+- CAPITAL: $10,000 (customize to your portfolio size)
+- If any data source is unavailable, state what's missing and analyze with available data only.
+
+
 ## Overview
 This skill provides professional quantitative analysis for ETF options trading, covering implied volatility (IV), historical volatility (HV), volatility skew, term structure, Greeks management, Kelly formula, and mispricing detection.
 
@@ -370,7 +376,7 @@ VIX 19.5 (13:42 ET, 3 min ago) ✓ Fresh
 ### Kelly Allocation Recommendation
 
 ```
-Capital: {{YOUR_CAPITAL}} (configure with your total trading capital)
+Capital: the configured CAPITAL amount
 Base Kelly: 32.5% of capital
 VIX Adjustment (VIX=26): 0.7× multiplier
 → Actual Kelly: 22.75% of capital

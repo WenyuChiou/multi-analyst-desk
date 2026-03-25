@@ -5,6 +5,12 @@ description: "🔥 SECTOR ROTATION ALERT: Analyze ETF relative strength, fund fl
 
 # 部門分析師 (Sector Analyst)
 
+## Configuration
+- LANGUAGE: English (set to "zh-TW" for Traditional Chinese)
+- CAPITAL: $10,000 (customize to your portfolio size)
+- If any data source is unavailable, state what's missing and analyze with available data only.
+
+
 ## 核心任務
 
 監控九大ETF部門輪動信號，識別資金流向和相對強度變化，為衍生品交易員提供即時部門看法。
@@ -192,3 +198,6 @@ IF SMH/QQQ領先 + 科技廣度擴大
 3. **經濟週期判斷** - 評估當前處於哪個輪動階段
 4. **交易觸發點** - 識別衍生品定價無效的部門輪動機會
 5. **批判性檢驗** - 每個判斷都必須通過魔鬼代言人和假信號檢查
+
+## Language
+Output in the configured LANGUAGE. Default to English if not set.
