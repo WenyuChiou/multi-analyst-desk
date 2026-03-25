@@ -1,0 +1,167 @@
+{
+  "_comment": "portfolio_data_template.json — place this as portfolio_data.json in your project root.",
+  "_comment2": "When present, analysts read this file first before falling back to WebSearch.",
+  "_comment3": "All fields are optional. Omit any section you do not have data for.",
+  "_version": "1.0",
+  "_updated": "2026-03-25T16:32:00-05:00",
+
+  "account": {
+    "total_capital": 55000,
+    "buying_power": 38200,
+    "cash": 12500,
+    "positions_value": 42500,
+    "daily_pnl": 97,
+    "mtd_pnl": 431,
+    "ytd_pnl": 1820,
+    "max_daily_loss_limit": 1100,
+    "max_position_size_pct": 0.05
+  },
+
+  "open_positions": [
+    {
+      "id": "pos_001",
+      "ticker": "XLE",
+      "strategy": "bull_put_spread",
+      "legs": [
+        {
+          "type": "short_put",
+          "strike": 82.0,
+          "expiry": "2026-04-25",
+          "dte": 31,
+          "quantity": -3,
+          "entry_price": 1.45,
+          "current_mark": 1.05,
+          "delta": -0.32,
+          "theta": 0.048,
+          "vega": -0.062,
+          "gamma": 0.018
+        },
+        {
+          "type": "long_put",
+          "strike": 80.0,
+          "expiry": "2026-04-25",
+          "dte": 31,
+          "quantity": 3,
+          "entry_price": 0.60,
+          "current_mark": 0.44,
+          "delta": 0.18,
+          "theta": -0.016,
+          "vega": 0.041,
+          "gamma": 0.012
+        }
+      ],
+      "spread_summary": {
+        "net_credit_entry": 0.85,
+        "net_credit_current": 0.61,
+        "pnl_unrealized": 72,
+        "pnl_pct_of_max": 0.28,
+        "max_profit": 255,
+        "max_loss": 345,
+        "break_even": 81.15,
+        "close_target_pct": 0.65,
+        "close_target_credit": 0.30
+      },
+      "management": {
+        "checkpoint_14dte": "2026-04-11",
+        "checkpoint_7dte": "2026-04-18",
+        "hard_close_date": "2026-04-24",
+        "hard_close_reason": "CVX and XOM earnings on Apr 25 — earnings risk",
+        "stop_loss_trigger": "delta > 0.45 OR spread mark > 1.70",
+        "notes": "OPEC+ supply cut thesis. Sector rotation confirmed. XLE/SPY ratio trending up 5 sessions."
+      },
+      "entry_date": "2026-03-25",
+      "entry_rationale": "XLE undervalued vs. equilibrium (-7.4% gap). OPEC+ cut extension signal. Sector inflows $340M Monday. Kelly 3 contracts."
+    }
+  ],
+
+  "pending_orders": [
+    {
+      "id": "pending_001",
+      "ticker": "TLT",
+      "strategy": "bull_put_spread",
+      "strikes": [85.0, 83.0],
+      "expiry": "2026-04-25",
+      "quantity": 2,
+      "target_credit": 0.65,
+      "trigger_condition": "FOMC minutes dovish tone confirmed (Wednesday 2 PM ET)",
+      "status": "waiting_for_trigger",
+      "notes": "TLT -5.4% below equilibrium. Dovish FOMC minutes would drive bond rally."
+    },
+    {
+      "id": "pending_002",
+      "ticker": "GLD",
+      "strategy": "bull_put_spread",
+      "strikes": [287.0, 284.0],
+      "expiry": "2026-04-17",
+      "quantity": 2,
+      "target_credit": 0.65,
+      "trigger_condition": "GLD > 294.50 AND DXY < 104.4",
+      "status": "waiting_for_trigger",
+      "notes": "GLD IV spike to 72% on dollar strength. Wait for DXY reversal before entering."
+    }
+  ],
+
+  "closed_positions": [
+    {
+      "id": "closed_001",
+      "ticker": "SPY",
+      "strategy": "bear_call_spread",
+      "strikes": [545.0, 548.0],
+      "expiry": "2026-03-21",
+      "quantity": 2,
+      "entry_credit": 0.72,
+      "close_debit": 0.18,
+      "pnl_realized": 108,
+      "close_reason": "65% of max profit reached at 7 DTE",
+      "close_date": "2026-03-20"
+    }
+  ],
+
+  "watchlist": [
+    {
+      "ticker": "QQQ",
+      "note": "Overvalued +4.9% vs. equilibrium. IV Rank 58%. Bear call spread candidate post-FOMC.",
+      "action": "WATCH — do not enter before Wednesday FOMC minutes"
+    },
+    {
+      "ticker": "GLD",
+      "note": "Conditional entry pending DXY reversal. IV Rank 72% attractive.",
+      "action": "CONDITIONAL — see pending_orders"
+    }
+  ],
+
+  "market_context": {
+    "as_of": "2026-03-25T16:30:00-05:00",
+    "regime": "cautious-bullish (energy) / risk-off (broad market)",
+    "regime_confidence": 3,
+    "vix": 24.1,
+    "spy_price": 530.85,
+    "dxy": 104.8,
+    "wti_crude": 81.70,
+    "fed_funds_rate": "4.25-4.50%",
+    "yield_curve_2y10y_bp": -18,
+    "notes": "Hot CPI Feb 3.4% (consensus 3.1%). FOMC held. FOMC minutes Wednesday. Dollar strength ongoing."
+  },
+
+  "scenario_weights": {
+    "as_of": "2026-03-25",
+    "H0_base_case": 0.25,
+    "H1_geopolitical_shock": 0.20,
+    "H2_fed_policy_pivot": 0.22,
+    "H3_stagflation_hot_cpi": 0.18,
+    "H4_supply_shock_commodity": 0.15,
+    "_note": "Weights should sum to approximately 1.0. Updated by analyst team each morning."
+  },
+
+  "risk_parameters": {
+    "max_loss_per_trade_pct": 0.04,
+    "kelly_min_fraction": 0.25,
+    "kelly_max_fraction": 0.75,
+    "target_dte": 30,
+    "close_at_profit_pct": 0.65,
+    "stop_loss_multiplier": 2.0,
+    "consensus_penalty_pct": 0.30,
+    "max_open_positions": 5,
+    "preferred_etfs": ["SPY", "QQQ", "IWM", "XLE", "XLF", "GLD", "TLT", "SMH", "XLU"]
+  }
+}

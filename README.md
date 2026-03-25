@@ -237,6 +237,21 @@ Next Check: 8:30 AM ET pre-market
 
 ---
 
+## 📋 Sample Outputs
+
+See the `examples/` directory for realistic output samples showing what each report type looks like:
+
+| File | Description |
+|------|-------------|
+| [premarket_output_sample.md](examples/premarket_output_sample.md) | Full pre-market briefing — 4-analyst debate, mispricing table, disagreement resolution, specific trade recommendation with strike/size/management plan |
+| [intraday_scan_sample.md](examples/intraday_scan_sample.md) | Mid-day opportunity detection — GLD dislocation on dollar spike, IV rank jump from 45% to 72%, signal vs. noise classification, conditional entry setup |
+| [postmarket_review_sample.md](examples/postmarket_review_sample.md) | End-of-day review — open position P&L, total portfolio Greeks, XLE at 65% max profit recommendation, morning predictions vs. actuals, next-day key levels |
+| [portfolio_data_template.json](examples/portfolio_data_template.json) | Input data template — account info, open positions with legs and Greeks, pending orders, watchlist, scenario weights, risk parameters |
+
+The `portfolio_data_template.json` shows the expected structure for the optional `portfolio_data.json` file. Copy it to your project root, fill in your real positions, and all analysts will read it first before falling back to WebSearch.
+
+---
+
 ## Installation
 
 ```bash
