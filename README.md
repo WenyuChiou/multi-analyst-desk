@@ -114,14 +114,6 @@ The analytical engine is a **multi-scenario equilibrium pricing framework**: eac
 | **market-intel** | Real-time intelligence gatherer | Cross-validated news from English + Chinese sources; credibility scores; structured ETF impact assessments |
 | **opportunity-detector** | Intraday anomaly detector and noise filter | Signal vs. noise classification; stand-down calls; fast-turnaround credit spread opportunities |
 
-### Scheduled Tasks
-
-| Task | Trigger | Output |
-|------|---------|--------|
-| **premarket-ai-analysis** | 8:30 AM ET | Full 4-analyst report, multi-scenario mispricing table, scenario updates, 3+ trade recs |
-| **intraday-ai-analysis** | Hourly (market hours) | Anomaly snapshot, portfolio Greeks check, go/no-go call, under 80 lines |
-| **postmarket-ai-analysis** | 4:30 PM ET | P&L review vs. morning predictions, overnight risk, next-day plan, postmortem |
-
 ---
 
 ## Examples
@@ -258,30 +250,7 @@ The `portfolio_data_template.json` shows the expected structure for the optional
 claude plugin add github:WenyuChiou/multi-analyst-desk
 ```
 
-All 7 skills and 3 scheduled task templates install automatically.
-
----
-
-## Scheduling
-
-Set up automated daily analysis with three scheduled tasks.
-
-**Pre-market (8:30 AM ET)** — Full analyst team report before market open:
-```bash
-claude schedule add premarket-ai-analysis --cron "30 8 * * 1-5" --timezone "America/New_York"
-```
-
-**Intraday (hourly, market hours)** — Quick anomaly check during the session:
-```bash
-claude schedule add intraday-ai-analysis --cron "0 9-16 * * 1-5" --timezone "America/New_York"
-```
-
-**Post-market (4:30 PM ET)** — End-of-day synthesis and next-day plan:
-```bash
-claude schedule add postmarket-ai-analysis --cron "30 16 * * 1-5" --timezone "America/New_York"
-```
-
-All three run automatically on weekdays (Monday through Friday). No babysitting required.
+All 7 skills install automatically.
 
 ---
 
@@ -299,7 +268,7 @@ Open `skills/trade-analyst/SKILL.md` and update these parameters:
 
 **Optional: local portfolio data file**
 
-Place a `portfolio_data.json` file in your project root with your current positions, Greeks, and buying power. When present, analysts read it first before falling back to WebSearch. Without it, all analysts work fully standalone using live data from public sources. See `examples/warroom_data_sample.json` for an example of the data structure.
+Place a `portfolio_data.json` file in your project root with your current positions, Greeks, and buying power. When present, analysts read it first before falling back to WebSearch. Without it, all analysts work fully standalone using live data from public sources. See `examples/portfolio_data_template.json` for the expected structure.
 
 ---
 

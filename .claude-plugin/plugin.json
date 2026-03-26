@@ -1,6 +1,6 @@
 {
   "name": "multi-analyst-desk",
-  "description": "A multi-analyst AI team for ETF options trading. Four specialists (macro, sector, quant, event) plus a chief strategist produce pre-market, intraday, and post-market reports with actionable credit spread recommendations. Features: disagreement-driven synthesis instead of consensus averaging, multi-scenario equilibrium pricing, bilingual news intelligence (English + Chinese sources), built-in critical thinking (Devil's Advocate, contradiction detection), and VIX-adjusted Kelly position sizing. Works fully standalone via WebSearch — no external data pipeline required.",
+  "description": "A multi-analyst AI team for ETF options trading. Four specialists (macro, sector, quant, event) plus a chief strategist produce pre-market, intraday, and post-market reports with actionable credit spread recommendations. Features: disagreement-driven synthesis instead of consensus averaging, multi-scenario equilibrium pricing, bilingual news intelligence (English + Chinese sources), built-in critical thinking (Devil's Advocate, contradiction detection), and VIX-adjusted Kelly position sizing. Works fully standalone via WebSearch — no external data pipeline required. Supports English and Traditional Chinese output.",
   "version": "1.1.0",
   "author": {
     "name": "Wen-Yu Chiou",
@@ -60,9 +60,9 @@
       "description": "Opportunity-detector runs noise vs signal classification, then trade-analyst provides actionable recommendation if warranted"
     },
     {
-      "title": "Daily workflow setup",
-      "prompt": "Set up my daily trading workflow: schedule a pre-market analysis at 8:30 AM ET, hourly intraday checks during market hours, and a post-market review at 4:30 PM ET.",
-      "description": "Configures all three scheduled tasks for automated daily ETF options workflow"
+      "title": "Post-market review",
+      "prompt": "Give me the post-market review: P&L for today's positions, what predictions were right or wrong, overnight risks, and the plan for tomorrow.",
+      "description": "Chief strategist synthesizes today's P&L vs. morning predictions, flags overnight risks, and sets tomorrow's opening plan"
     }
   ],
   "skills": [
@@ -73,11 +73,6 @@
     "./skills/event-analyst",
     "./skills/market-intel",
     "./skills/opportunity-detector"
-  ],
-  "scheduled-tasks": [
-    "./scheduled-tasks/premarket-analysis",
-    "./scheduled-tasks/intraday-analysis",
-    "./scheduled-tasks/postmarket-analysis"
   ],
   "license": "MIT",
   "repository": "https://github.com/WenyuChiou/multi-analyst-desk"

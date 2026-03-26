@@ -9,8 +9,6 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [1.1.0] - 2026-03-25
 
 ### Added
-- `scheduled-tasks/` directory with three automated task templates: `premarket-analysis`, `intraday-analysis`, `postmarket-analysis`
-- Scheduled tasks are now registered in `plugin.json` under `"scheduled-tasks"`
 - `opportunity-detector` skill for intraday anomaly detection and noise filtering
 - `market-intel` skill for bilingual (English + Chinese) real-time news intelligence
 - Call Ratio Spread added to trade-analyst permitted strategy table (aligning with quant-analyst)
@@ -20,8 +18,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - `plugin.json`: Fixed `defaults.LANGUAGE` from `"en"` to `"English"` to match configuration options
 - `README.md`: Corrected assertion count from 35 to 28
 - `macro-analyst/SKILL.md`: Removed duplicate GLD entry; merged into single line
-- `macro-analyst/SKILL.md`: Standardized Chinese terminology — 宏觀 → 巨觀 throughout
-- `examples/warroom_data_sample.json`: Fixed backslash path to forward slash
+- `macro-analyst/SKILL.md`: Fully translated to English for marketplace submission
+- `examples/portfolio_data_template.json`: Fixed backslash path to forward slash
 
 ---
 

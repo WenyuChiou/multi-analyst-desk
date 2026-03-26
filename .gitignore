@@ -1,0 +1,24 @@
+# Claude Code workspace state
+.claude/
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Data files (user-specific, not for distribution)
+portfolio_data.json
+warroom_data.json
+
+# Logs and temp files
+*.log
+*.tmp
+.cache/
